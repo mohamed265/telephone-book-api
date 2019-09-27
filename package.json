@@ -16,7 +16,12 @@
     "passport": "0.2.2",
     "request": "*",
     "sequelize": "5.19.0",
-    "mysql2": "1.7.0"
+    "mysql2": "1.7.0",
+    "morgan": "*",
+    "node-uuid": "*",
+    "rotating-file-stream": "*",
+    "winston": "*",
+    "continuation-local-storage": "*"
   },
   "repository": {},
   "engines": {

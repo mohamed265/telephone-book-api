@@ -1,21 +1,27 @@
 const express = require('express');
+
 var bodyParser = require('body-parser');
 
 var models = require('./DAO');
 
-sequelize.sync({ force: true })
+sequelize.sync({ force: false })
     .then(() => {
         console.log(`Database & tables created!`)
     })
 
-const port = 8080;
+const port = 3000;
+
 const app = express();
 app.use(bodyParser.json());
+
+var morgan = require('./utils/morgan.js')(app);
+var logger = require('./utils/logger.js');
 
 app.listen(port, () => {
     console.info(`Server running at http://localhost:${port}/`);
 });
 
+var getNamespace = require('continuation-local-storage').getNamespace;
 app.get('/', (req, res) => {
     res.status(200).end("App is running...")
 });
