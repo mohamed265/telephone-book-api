@@ -23,7 +23,8 @@ module.exports = (sequelize, type) => {
         address: {
             type: type.STRING,
             allowNull: true,
-        }
+        },
+        status: type.BOOLEAN
     });
 
     Contact.modelName = 'Contact';

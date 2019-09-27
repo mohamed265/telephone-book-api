@@ -2,12 +2,13 @@ const express = require('express');
 
 var bodyParser = require('body-parser');
 
-var models = require('./DAO');
+var daos = require('./DAO');
+var models = require('./models');
 
-sequelize.sync({ force: false })
-    .then(() => {
-        console.log(`Database & tables created!`)
-    })
+// sequelize.sync({ force: true })
+//     .then(() => {
+//         console.log(`Database & tables created!`)
+// })
 
 const port = 3000;
 
@@ -27,23 +28,23 @@ app.get('/', (req, res) => {
 });
 
 app.get('/', (req, res) => {
-    models.Answers.findAll({ include: [models.Questionnaire] }).then(answers => res.json(answers))
+    daos.Answers.findAll({ include: [daos.Questionnaire] }).then(answers => res.json(answers))
 });
 
 app.get('/questionnaire', (req, res) => {
-    models.Questionnaire.findAll({ include: [models.Answers] }).then(questionnaire => res.json(questionnaire))
+    daos.Questionnaire.findAll({ include: [daos.Answers] }).then(questionnaire => res.json(questionnaire))
 });
 
 app.get('/count', (req, res) => {
-    models.Answers.count().then(answers => res.json(answers))
+    daos.Answers.count().then(answers => res.json(answers))
 });
 
 app.get('/where', (req, res) => {
-    models.Answers.findAll({ where: { answerValue: { [Sequelize.Op.like]: '%i%' } }, limit: 1 }).then(answers => res.json(answers))
+    daos.Answers.findAll({ where: { answerValue: { [Sequelize.Op.like]: '%i%' } }, limit: 1 }).then(answers => res.json(answers))
 });
 
 app.get('/group', (req, res) => {
-    models.Answers.count({ attributes: ['answerValue'], group: ['answerValue'] }).then(answers => res.json(answers))
+    daos.Answers.count({ attributes: ['answerValue'], group: ['answerValue'] }).then(answers => res.json(answers))
 });
 
 //a.use('/child', child ); 
