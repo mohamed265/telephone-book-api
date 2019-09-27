@@ -1,5 +1,5 @@
 
-const StatusBaseModel = require('./Base/StatusBaseModel');
+const StatusBaseModel = require('./Base/BaseModel');
 
 class ContactModel extends StatusBaseModel { 
 
