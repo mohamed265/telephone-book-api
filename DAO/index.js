@@ -1,11 +1,13 @@
 'use strict';
 
-var fs        = require('fs');
-var path      = require('path');
+var fs = require('fs');
+var path = require('path');
 var Sequelize = require('sequelize');
-var basename  = path.basename(__filename);
-require('./../database/DBConfig');
-var db        = {};
+var basename = path.basename(__filename);
+
+var dbConfig = require('./../database/DBConfig');
+
+var db = {};
 
 fs
   .readdirSync(__dirname)

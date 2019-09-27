@@ -34,4 +34,12 @@ global.sequelize = new Sequelize(DBCredentials['database'], DBCredentials['user'
     }
 })
 
+
+global.sync = function () {
+    sequelize.sync({ force: true })
+        .then(() => {
+            console.log(`Database & tables created!`)
+        });
+}
+
 module.exports.sequelizeExport = function () { return sequelize };

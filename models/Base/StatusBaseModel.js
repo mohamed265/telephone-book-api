@@ -1,4 +1,4 @@
-var BasicModel = require('./BasicModel');
+var BaseModel = require('./BaseModel');
 
 class StatusBaseModel extends BaseModel {
 

@@ -27,7 +27,8 @@ module.exports = function (app) {
         path: logDirectory
     })
 
-    morgan.token('id', (req) => req.id.split('-')[0])
+    morgan.token('id', (req) => req.id)
+    // morgan.token('id', (req) => req.id.split('-')[0])
 
     function assignId(req, res, next) {
         req.id = uuid.v4()
