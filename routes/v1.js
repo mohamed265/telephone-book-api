@@ -1,10 +1,14 @@
 const express = require('express');
 const router = express.Router();
 
-var contact = require('./v1/contact');
-router.use('/contact', contact);
+var path = require('path');
+var version = 'v1';
 
-var city = require('./v1/city');
-router.use('/city', city);
+const listDirUtility = require('../utils/listDirFiles');
+
+listDirUtility.list(path.join(__dirname, version), [], function (file) {
+    var route = require(path.join(__dirname, version, file));
+    router.use('/' + file.slice(0, -3), route);
+})
 
 module.exports = router;
