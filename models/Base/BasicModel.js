@@ -6,6 +6,7 @@ class BasicModel {
 
     constructor() {
         this.id = "";
+        this.key = "";
         this.createdAt = "";
         this.updatedAt = "";
         this.deletedAt = "";

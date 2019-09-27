@@ -5,9 +5,16 @@ module.exports = (sequelize, type) => {
             primaryKey: true,
             autoIncrement: true
         },
-        isoCode: type.STRING,
-        name: type.STRING,
-        status: type.BOOLEAN
+        key: {
+            type: type.UUID,
+            allowNull: false,
+            unique: true
+        },
+        isoCode: {
+            type: type.STRING,
+            unique: true
+        },
+        name: type.STRING
     })
 
     lang.modelName = 'Lang';

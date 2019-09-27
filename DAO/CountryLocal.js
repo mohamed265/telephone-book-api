@@ -5,6 +5,11 @@ module.exports = (sequelize, type) => {
             primaryKey: true,
             autoIncrement: true
         },
+        key: {
+            type: type.UUID,
+            allowNull: false,
+            unique: true
+        },
         value: type.STRING
     })
 
@@ -26,7 +31,7 @@ module.exports = (sequelize, type) => {
             }
         });
     };
-    
+
     return countryLocal;
 }
 

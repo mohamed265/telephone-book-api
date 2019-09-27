@@ -4,7 +4,12 @@ module.exports = (sequelize, type) => {
             type: type.INTEGER,
             primaryKey: true,
             autoIncrement: true
-        }
+        },
+        key: {
+            type: type.UUID,
+            allowNull: false,
+            unique: true
+        },
     });
 
     ContactTags.modelName = 'ContactTags';

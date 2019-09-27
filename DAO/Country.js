@@ -5,8 +5,12 @@ module.exports = (sequelize, type) => {
             primaryKey: true,
             autoIncrement: true
         },
-        name: type.STRING,
-        status: type.BOOLEAN
+        key: {
+            type: type.UUID,
+            allowNull: false,
+            unique: true
+        },
+        name: type.STRING
     })
 
     country.modelName = 'Country';
