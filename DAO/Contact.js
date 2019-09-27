@@ -1,12 +1,9 @@
 module.exports = (sequelize, type) => {
     Contact = sequelize.define('Contact', {
         id: {
-            type: type.INTEGER,
-            primaryKey: true,
-            autoIncrement: true
-        },
-        key: {
             type: type.UUID,
+            defaultValue: type.UUIDV4,
+            primaryKey: true,
             allowNull: false,
             unique: true
         },

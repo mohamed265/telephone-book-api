@@ -1,12 +1,9 @@
 module.exports = (sequelize, type) => {
     AreaLocal = sequelize.define('LK_Area_Local', {
         id: {
-            type: type.INTEGER,
-            primaryKey: true,
-            autoIncrement: true
-        },
-        key: {
             type: type.UUID,
+            defaultValue: type.UUIDV4,
+            primaryKey: true,
             allowNull: false,
             unique: true
         },

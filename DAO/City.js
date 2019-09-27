@@ -1,12 +1,9 @@
 module.exports = (sequelize, type) => {
     city = sequelize.define('LK_City', {
         id: {
-            type: type.INTEGER,
-            primaryKey: true,
-            autoIncrement: true
-        },
-        key: {
             type: type.UUID,
+            defaultValue: type.UUIDV4,
+            primaryKey: true,
             allowNull: false,
             unique: true
         },
