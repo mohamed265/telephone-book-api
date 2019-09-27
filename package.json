@@ -21,7 +21,8 @@
     "node-uuid": "*",
     "rotating-file-stream": "*",
     "winston": "*",
-    "continuation-local-storage": "*"
+    "continuation-local-storage": "*",
+    "express-swagger-generator": "*"
   },
   "repository": {},
   "engines": {

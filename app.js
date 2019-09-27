@@ -6,6 +6,7 @@ const app = express();
 
 app.use(bodyParser.json());
 
+var swaggerConfig = require('./utils/swaggerConfig.js')(app);
 
 var morgan = require('./utils/morgan.js')(app);
 
