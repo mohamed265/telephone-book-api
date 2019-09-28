@@ -6,6 +6,11 @@
 */
 
 /**
+* @typedef not_found_dto
+* @property {string} status.required - status code - eg: 202
+*/
+
+/**
 * @typedef bad_request
 * @property {string} status.required - status code - eg: 400
 * @property {Array.<error_dto>} data.required - errors list

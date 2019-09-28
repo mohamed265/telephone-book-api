@@ -5,6 +5,12 @@ module.exports.createSuccessResponse = function (res, data) {
     })
 }
 
+module.exports.createNotFoundResponse = function (res) {
+    res.status(202).json({
+        status: 202
+    })
+}
+
 module.exports.createCreatedResponse = function (res, data) {
     res.status(201).json({
         status: 201,

@@ -1,13 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-var util = require('util');
-
 var logger = require('../../utils/logger.js').logger;
 
-var db = require('../../DAO');
-
-var models = require('../../models');
+var langService = require('../../service/v1/LangService');
 
 var langValidator = require('../../validators/LangValidator');
 
@@ -42,12 +38,11 @@ router.get('/', (req, res) => {
 
         logger.info("list all lang model");
 
-        db.Lang.findAll().then(
-            langDaos => {
-                var langDtos = langDaos.map(langDao => langWrapper.createDTO(langDao));
-                responseUtility.createSuccessResponse(res, langDtos);
-            }
-        );
+        langService.getAll(langDaos => {
+            var langDtos = langDaos.map(langDao => langWrapper.createDTO(langDao));
+            responseUtility.createSuccessResponse(res, langDtos);
+        });
+
     } catch (exception) {
         exceptionHandler.handle(res, exception);
     }
@@ -65,6 +60,7 @@ router.get('/', (req, res) => {
 * @group Language Section - lang apis
 * @param {string} id.path.required - language id - eg: 0ea04144-a9b4-4280-b689-f9f157b50769
 * @returns {success_dto.model} 200 - normal response
+* @returns {not_found_dto.model} 202 - not found response
 * @returns {bad_request.model} 400 - bad request response
 * @returns {internal_error_respone.model} 500 - error response
 */
@@ -74,14 +70,18 @@ router.get('/:id', (req, res) => {
 
         const id = req.params.id;
 
-        logger.info("loading lang model with id: " + id);
+        logger.info(`loading lang model with id: ${id}`);
 
-        db.Lang.findByPk(id).then(
-            langDao => {
-                logger.info("lang model loaded successfully ...");
+        langService.getById(id, langDao => {
+            if (langDao) {
+                logger.info(`lang model: ${id} loaded successfully ...`);
                 responseUtility.createSuccessResponse(res, langWrapper.createDTO(langDao));
+            } else {
+                logger.info(`lang model: ${id} not found`);
+                responseUtility.createNotFoundResponse(res);
             }
-        );
+        });
+
     } catch (exception) {
         exceptionHandler.handle(res, exception);
     }
@@ -107,18 +107,12 @@ router.post('/', (req, res) => {
     try {
         langValidator.validate(req.body);
 
-        var langDao = langWrapper.createDAO(req.body);
-
-        logger.info("adding lang model: " + util.inspect(req.body));
-
-        langDao.save()
-            .then(model => {
-                logger.info("lang model saved successfully ...");
-                responseUtility.createCreatedResponse(res, langWrapper.createDTO(model));
-            })
-            .catch(exception => {
-                exceptionHandler.handle(res, exception);
-            });
+        langService.save(req.body, model => {
+            logger.info("lang model saved successfully ...");
+            responseUtility.createCreatedResponse(res, langWrapper.createDTO(model));
+        }, exception => {
+            exceptionHandler.handle(res, exception);
+        });
 
     } catch (exception) {
         exceptionHandler.handle(res, exception);
@@ -143,18 +137,13 @@ router.patch('/:id', (req, res) => {
 
         const id = req.params.id;
 
-        logger.info("update lang model with id: " + id);
+        langService.update(id, req.body, model => {
+            logger.info(`lang model ${id} updated successfully ...`);
+            responseUtility.createCreatedResponse(res, langWrapper.createDTO(model));
+        }, exception => {
+            exceptionHandler.handle(res, exception);
+        });
 
-        db.Lang.findByPk(id)
-            .then(langDAO => {
-                logger.info("lang model new values: " + util.inspect(req.body));
-                return langDAO.update(req.body)
-            }).then(model => {
-                logger.info("lang model updated successfully ...");
-                responseUtility.createSuccessResponse(res, langWrapper.createDTO(model));
-            }).catch(exception => {
-                exceptionHandler.handle(res, exception);
-            });
     } catch (exception) {
         exceptionHandler.handle(res, exception);
     }
@@ -175,16 +164,14 @@ router.delete('/:id', (req, res) => {
         langValidator.validateParams(req.params);
 
         const id = req.params.id;
-        logger.info("delete lang model with id: " + id);
 
-        db.Lang.destroy({
-            where: { id: id }
-        }).then(deletedOwner => {
-            logger.info("lang model: " + id + " deleted successfully ...");
+        langService.delete(id, req.body, deletedOwner => {
+            logger.info(`lang model: ${id} deleted successfully ...`);
             responseUtility.createSuccessResponse(res,
-                'number of deleted rows: ' + deletedOwner
+                `number of deleted rows: ${deletedOwner}`
             );
         });
+
     } catch (exception) {
         exceptionHandler.handle(res, exception);
     }
