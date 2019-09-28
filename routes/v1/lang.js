@@ -3,7 +3,7 @@ const router = express.Router();
 
 var util = require('util');
 
-var logger = require('../../utils/logger.js');
+var logger = require('../../utils/logger.js').logger;
 
 var db = require('../../DAO');
 

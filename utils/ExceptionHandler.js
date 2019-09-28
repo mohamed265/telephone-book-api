@@ -1,6 +1,8 @@
-var logger = require('./logger.js');
+var logger = require('./logger.js').logger;
 
 var responseUtility = require('./ResponseUtility.js');
+
+var util = require('util');
 
 module.exports.handle = function (response, exception) {
     if (exception.name == 'SequelizeUniqueConstraintError') {
@@ -8,7 +10,7 @@ module.exports.handle = function (response, exception) {
     } else if (exception.name == 'ValidationException') {
         handleValidationException(response, exception);
     } else {
-        logger.error(exception);
+        logger.error(util.inspect(exception));
         responseUtility.createInternalErrorResponse(response, exception);
     }
 }
@@ -29,7 +31,7 @@ function handleSequelizeUniqueConstraintError(response, exception) {
 
 function handleValidationException(response, exception) {
 
-    logger.error(exception);
+    logger.error(util.inspect(exception));
 
     responseUtility.createBadRequestResponse(response, exception.errors);
 }

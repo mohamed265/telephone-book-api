@@ -8,9 +8,7 @@ app.use(bodyParser.json());
 
 var swaggerConfig = require('./utils/swaggerConfig.js')(app);
 
-var morgan = require('./utils/morgan.js')(app);
-
-var logger = require('./utils/logger.js');
+var logger = require('./utils/logger.js')(app);
 
 app.get('/', (req, res) => {
     res.status(200).end("App is running...")

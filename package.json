@@ -20,7 +20,8 @@
     "morgan": "*",
     "node-uuid": "*",
     "rotating-file-stream": "*",
-    "winston": "*",
+    "winston": "^3.0.0",
+    "express-winston": "^3.0.0",
     "continuation-local-storage": "*",
     "express-swagger-generator": "*"
   },
