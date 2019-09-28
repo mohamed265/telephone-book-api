@@ -31,34 +31,36 @@ module.exports = (sequelize, type) => {
     Contact.modelName = 'Contact';
 
     Contact.associate = function (models) {
-        models.Contact.belongsTo(models.Area, {
-            as: "area",
+        models.Contact.belongsTo(models.Area, { 
             onDelete: "RESTRICT",
             foreignKey: {
                 allowNull: false
             }
         });
-        models.Contact.belongsTo(models.City, {
-            as: "city",
+        models.Contact.belongsTo(models.City, { 
             onDelete: "RESTRICT",
             foreignKey: {
                 allowNull: false
             }
         });
-        models.Contact.belongsTo(models.Country, {
-            as: "country",
+        models.Contact.belongsTo(models.Country, { 
             onDelete: "RESTRICT",
             foreignKey: {
                 allowNull: false
             }
         });
-        models.Contact.belongsTo(models.Type, {
-            as: "type",
+        models.Contact.belongsTo(models.Type, { 
             onDelete: "RESTRICT",
             foreignKey: {
                 allowNull: false
             }
         });
+
+        models.Contact.belongsToMany(models.Lang, { through: 'LK_Area_Local' });
+        models.Contact.belongsToMany(models.Lang, { through: 'LK_City_Local' });
+        models.Contact.belongsToMany(models.Lang, { through: 'LK_Country_Local' });
+        models.Contact.belongsToMany(models.Lang, { through: 'LK_Tag_Local' });
+        models.Contact.belongsToMany(models.Lang, { through: 'LK_Type_Local' });
     };
 
     return Contact;

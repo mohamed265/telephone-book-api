@@ -12,14 +12,12 @@ module.exports = (sequelize, type) => {
 
     AreaLocal.associate = function (models) {
         models.AreaLocal.belongsTo(models.Area, {
-            as: "area",
             onDelete: "RESTRICT",
             foreignKey: {
                 allowNull: false
             }
         });
         models.AreaLocal.belongsTo(models.Lang, {
-            as: "lang",
             onDelete: "RESTRICT",
             foreignKey: {
                 allowNull: false

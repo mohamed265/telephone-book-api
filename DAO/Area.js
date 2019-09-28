@@ -1,5 +1,5 @@
 module.exports = (sequelize, type) => {
-    Area = sequelize.define('LK_Area', {
+    area = sequelize.define('LK_Area', {
         id: {
             type: type.UUID,
             defaultValue: type.UUIDV4,
@@ -10,8 +10,13 @@ module.exports = (sequelize, type) => {
         name: type.STRING
     })
 
-    Area.modelName = 'Area';
+    area.modelName = 'Area';
+    
+    area.associate = function (models) {
+        models.Area.hasMany(models.AreaLocal);
+        models.Area.belongsToMany(models.Lang, { through: 'LK_Area_Local' });
+    };
 
-    return Area;
+    return area;
 }
 

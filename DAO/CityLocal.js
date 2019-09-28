@@ -14,14 +14,12 @@ module.exports = (sequelize, type) => {
 
     cityLocal.associate = function (models) {
         models.CityLocal.belongsTo(models.City, {
-            as: "city",
             onDelete: "RESTRICT",
             foreignKey: {
                 allowNull: false
             }
         });
         models.CityLocal.belongsTo(models.Lang, {
-            as: "lang",
             onDelete: "RESTRICT",
             foreignKey: {
                 allowNull: false

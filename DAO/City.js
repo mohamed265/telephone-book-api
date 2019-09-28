@@ -12,6 +12,11 @@ module.exports = (sequelize, type) => {
 
     city.modelName = 'City';
 
+    city.associate = function (models) {
+        models.City.hasMany(models.CityLocal);
+        models.City.belongsToMany(models.Lang, { through: 'LK_City_Local' });
+    };
+
     return city;
 }
 

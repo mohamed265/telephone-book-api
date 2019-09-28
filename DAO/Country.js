@@ -12,6 +12,11 @@ module.exports = (sequelize, type) => {
 
     country.modelName = 'Country';
 
+    country.associate = function (models) {
+        models.Country.hasMany(models.CountryLocal);
+        models.Country.belongsToMany(models.Lang, { through: 'LK_Country_Local' });
+    };
+
     return country;
 }
 
