@@ -165,7 +165,7 @@ router.delete('/:id', (req, res) => {
 
         const id = req.params.id;
 
-        langService.delete(id, req.body, deletedOwner => {
+        langService.delete(id, deletedOwner => {
             logger.info(`lang model: ${id} deleted successfully ...`);
             responseUtility.createSuccessResponse(res,
                 `number of deleted rows: ${deletedOwner}`

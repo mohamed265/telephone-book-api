@@ -102,6 +102,8 @@ module.exports = function (app) {
 
     function _getCallerFile() {
         try {
+            // var execludes = ['BaseService', 'ExceptionHandler'];
+
             var err = new Error();
             var callerfile;
             var currentfile;
@@ -113,7 +115,7 @@ module.exports = function (app) {
             while (err.stack.length) {
                 callerfile = err.stack.shift().getFileName();
 
-                if (currentfile !== callerfile && !callerfile.includes('ExceptionHandler.js')) return callerfile.slice(callerfile.lastIndexOf('/') + 1);
+                if (currentfile !== callerfile && !callerfile.includes('ExceptionHandler.js') && !callerfile.includes('BaseService.js')) return callerfile.slice(callerfile.lastIndexOf('/') + 1);
             }
         } catch (err) { }
         return "unknown";

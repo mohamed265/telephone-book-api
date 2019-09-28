@@ -20,7 +20,6 @@ function handleSequelizeUniqueConstraintError(response, exception) {
     logger.error(exception.message + ": " + exception.original.message);
 
     responseUtility.createBadRequestResponse(response, exception.errors.map(error => {
-        logger.error(exception.message + ": " + error.message);
         return {
             field: error.path,
             value: error.value,
@@ -31,7 +30,7 @@ function handleSequelizeUniqueConstraintError(response, exception) {
 
 function handleValidationException(response, exception) {
 
-    logger.error(util.inspect(exception));
+    logger.error(exception.message + " " + util.inspect(exception.errors));
 
     responseUtility.createBadRequestResponse(response, exception.errors);
 }
