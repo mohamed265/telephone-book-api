@@ -34,8 +34,8 @@ var exceptionHandler = require('../../utils/ExceptionHandler');
 * List all lang api
 * @route GET /lang
 * @group Language Section - lang apis
-* @returns {success_list_dto.model} 200 - normal response:
-* @returns {object} 500 - eg: {"status":500,"message":"internal node error"}
+* @returns {success_list_dto.model} 200 - normal response
+* @returns {internal_error_respone.model} 500 - error response
 */
 router.get('/', (req, res) => {
     try {
@@ -60,26 +60,13 @@ router.get('/', (req, res) => {
 */
 
 /**
-* @typedef error_dto
-* @property {string} field.required - field name
-* @property {string} value.required - value that cause error
-* @property {string} error.required - error message
-*/
-
-/**
-* @typedef bad_request
-* @property {string} status.required - status code - eg: 400
-* @property {Array.<error_dto>} data.required - errors list
-*/
-
-/**
 * get lang api
 * @route GET /lang/:{id}
 * @group Language Section - lang apis
 * @param {string} id.path.required - language id - eg: 0ea04144-a9b4-4280-b689-f9f157b50769
-* @returns {success_dto.model} 200 - normal response:
-* @returns {bad_request.model} 400 - bad request response:
-* @returns {object} 500 - eg: {"status":500,"message":"internal node error"}
+* @returns {success_dto.model} 200 - normal response
+* @returns {bad_request.model} 400 - bad request response
+* @returns {internal_error_respone.model} 500 - error response
 */
 router.get('/:id', (req, res) => {
     try {
@@ -112,8 +99,8 @@ router.get('/:id', (req, res) => {
 * @group Language Section - lang apis
 * @param {lang_body.model} body.body.required - language body
 * @returns {success_dto.model} 201 - normal response:
-* @returns {bad_request.model} 400 - bad request response:
-* @returns {object} 500 - eg: {"status":500,"message":"internal node error"}
+* @returns {bad_request.model} 400 - bad request response
+* @returns {internal_error_respone.model} 500 - error response
 */
 router.post('/', (req, res) => {
 
@@ -143,9 +130,9 @@ router.post('/', (req, res) => {
 * @route PATCH /lang/:{id}
 * @group Language Section - lang apis
 * @param {lang_body.model} body.body - language body
-* @returns {success_dto.model} 200 - normal response:
-* @returns {bad_request.model} 400 - bad request response:
-* @returns {object} 500 - eg: {"status":500,"message":"internal node error"}
+* @returns {success_dto.model} 200 - normal response
+* @returns {bad_request.model} 400 - bad request response
+* @returns {internal_error_respone.model} 500 - error response
 */
 router.patch('/:id', (req, res) => {
     try {
@@ -179,8 +166,8 @@ router.patch('/:id', (req, res) => {
 * @group Language Section - lang apis
 * @param {string} id.path.required - language id - eg: 0ea04144-a9b4-4280-b689-f9f157b50769
 * @returns {object} 200 - eg: { "status": 200, "data": "number of deleted rows: 1" }
-* @returns {bad_request.model} 400 - bad request response:
-* @returns {object} 500 - eg: {"status":500,"message":"internal node error"}
+* @returns {bad_request.model} 400 - bad request response
+* @returns {internal_error_respone.model} 500 - error response
 */
 router.delete('/:id', (req, res) => {
 
