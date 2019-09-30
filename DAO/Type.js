@@ -13,7 +13,10 @@ module.exports = (sequelize, type) => {
     type.modelName = 'Type';
 
     type.associate = function (models) {
-        models.Type.hasMany(models.TypeLocal);
+        models.Type.locals = models.Type.hasMany(models.TypeLocal, {
+            as: 'locals',
+            unique: false
+        });
         models.Type.belongsToMany(models.Lang, { through: 'LK_Type_Local' });
     };
 

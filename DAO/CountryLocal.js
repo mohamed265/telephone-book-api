@@ -12,21 +12,6 @@ module.exports = (sequelize, type) => {
 
     countryLocal.modelName = 'CountryLocal';
 
-    countryLocal.associate = function (models) {
-        models.CountryLocal.belongsTo(models.Country, {
-            onDelete: "RESTRICT",
-            foreignKey: {
-                allowNull: false
-            }
-        });
-        models.CountryLocal.belongsTo(models.Lang, {
-            onDelete: "RESTRICT",
-            foreignKey: {
-                allowNull: false
-            }
-        });
-    };
-
     return countryLocal;
 }
 

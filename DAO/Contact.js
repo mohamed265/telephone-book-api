@@ -56,11 +56,11 @@ module.exports = (sequelize, type) => {
             }
         });
 
-        models.Contact.belongsToMany(models.Lang, { through: 'LK_Area_Local' });
-        models.Contact.belongsToMany(models.Lang, { through: 'LK_City_Local' });
-        models.Contact.belongsToMany(models.Lang, { through: 'LK_Country_Local' });
-        models.Contact.belongsToMany(models.Lang, { through: 'LK_Tag_Local' });
-        models.Contact.belongsToMany(models.Lang, { through: 'LK_Type_Local' });
+        // models.Contact.belongsToMany(models.Lang, { through: 'LK_Area_Local' });
+        // models.Contact.belongsToMany(models.Lang, { through: 'LK_City_Local' });
+        // models.Contact.belongsToMany(models.Lang, { through: 'LK_Country_Local' });
+        // models.Contact.belongsToMany(models.Lang, { through: 'LK_Tag_Local' });
+        // models.Contact.belongsToMany(models.Lang, { through: 'LK_Type_Local' });
     };
 
     return Contact;

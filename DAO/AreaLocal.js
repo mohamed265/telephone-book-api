@@ -10,21 +10,6 @@ module.exports = (sequelize, type) => {
         value: type.STRING
     })
 
-    AreaLocal.associate = function (models) {
-        models.AreaLocal.belongsTo(models.Area, {
-            onDelete: "RESTRICT",
-            foreignKey: {
-                allowNull: false
-            }
-        });
-        models.AreaLocal.belongsTo(models.Lang, {
-            onDelete: "RESTRICT",
-            foreignKey: {
-                allowNull: false
-            }
-        });
-    };
-
     AreaLocal.modelName = 'AreaLocal';
 
     return AreaLocal;

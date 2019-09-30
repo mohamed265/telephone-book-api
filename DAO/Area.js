@@ -13,7 +13,12 @@ module.exports = (sequelize, type) => {
     area.modelName = 'Area';
     
     area.associate = function (models) {
-        models.Area.hasMany(models.AreaLocal);
+
+        models.Area.locals = models.Area.hasMany(models.AreaLocal, {
+            as: 'locals',
+            unique: false
+        });
+        
         models.Area.belongsToMany(models.Lang, { through: 'LK_Area_Local' });
     };
 

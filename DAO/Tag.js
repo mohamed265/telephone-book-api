@@ -13,7 +13,10 @@ module.exports = (sequelize, type) => {
     tag.modelName = 'Tag';
     
     tag.associate = function (models) {
-        models.Tag.hasMany(models.TagLocal);
+        models.Tag.locals = models.Tag.hasMany(models.TagLocal, {
+            as: 'locals',
+            unique: false
+        });
         models.Tag.belongsToMany(models.Lang, { through: 'LK_Tag_Local' });
     };
 

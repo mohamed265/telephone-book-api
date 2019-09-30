@@ -1,15 +1,10 @@
 module.exports = (sequelize, type) => {
     lang = sequelize.define('LK_Lang', {
-        id: {
-            type: type.UUID,
-            defaultValue: type.UUIDV4,
-            primaryKey: true,
-            allowNull: false,
-            unique: true
-        },
         isoCode: {
             type: type.STRING,
-            unique: true
+            unique: true,
+            primaryKey: true,
+            allowNull: false,
         },
         name: type.STRING
     })
