@@ -17,6 +17,14 @@ module.exports = function (DAO) {
                 }
             );
         },
+        getAllIncludeLocals: function (callback) {
+
+            db[DAO].findAll({ include: [db[`${DAO}Local`], db[`Lang`]] }).then(
+                daos => {
+                    callback(daos);
+                }
+            );
+        },
         getById: function (id, callback) {
             db[DAO].findByPk(id).then(
                 dao => {
@@ -25,6 +33,20 @@ module.exports = function (DAO) {
             );
         },
         save: function (body, successCallback, errorCallback) {
+
+            var dao = wrapper.createDAO(body);
+
+            logger.info(`adding ${DAO} model: ${util.inspect(body)}`);
+
+            dao.save()
+                .then(model => {
+                    successCallback(model);
+                })
+                .catch(exception => {
+                    errorCallback(exception);
+                });
+        },
+        saveWithLocals: function (body, successCallback, errorCallback) {
 
             var dao = wrapper.createDAO(body);
 
