@@ -59,3 +59,24 @@ module.exports.validateExactLengthString = function (fieldName, value, exactLeng
 
     return errors;
 }
+
+module.exports.validateLocals = function (locals) {
+    var errors = [];
+
+    if (Array.isArray(locals)) {
+
+        locals.forEach(local => {
+            errors = errors.concat(this.validateString('isoCode', local.isoCode, 255));
+
+            errors = errors.concat(this.validateString('value', local.value, 255));
+        });
+    } else {
+        errors.push({
+            field: 'locals',
+            value: locals,
+            error: 'locals should be an array of form [{isCode: "en", value: "word"}]'
+        });
+    }
+
+    return errors;
+}

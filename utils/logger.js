@@ -140,6 +140,7 @@ module.exports = function (app) {
             winstonLogger.log(level, formatMessage(level, message));
         },
         error: function (message) {
+            console.log(message);
             winstonLogger.error(formatMessage("ERROR", message));
         },
         warn: function (message) {
@@ -149,6 +150,7 @@ module.exports = function (app) {
             winstonLogger.verbose(formatMessage("VERBOSE", message));
         },
         info: function (message) {
+            console.log(message);
             winstonLogger.info(formatMessage("INFO", message));
         },
         debug: function (message) {

@@ -17,7 +17,7 @@ module.exports.createModel = function (langDAO) {
 
     var langModel = new LangModel();
 
-    Object.keys().forEach(key => {
+    Object.keys(langModel).forEach(key => {
         langModel[key] = langDAO[key];
     })
 

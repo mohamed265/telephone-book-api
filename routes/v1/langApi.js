@@ -56,7 +56,7 @@ router.get('/', (req, res) => {
 
 /**
 * get lang api
-* @route GET /lang/:{id}
+* @route GET /lang/{id}
 * @group Language Section - lang apis
 * @param {string} id.path.required - language id - eg: 0ea04144-a9b4-4280-b689-f9f157b50769
 * @returns {success_dto.model} 200 - normal response
@@ -121,7 +121,7 @@ router.post('/', (req, res) => {
 
 /**
 * add lang api
-* @route PATCH /lang/:{id}
+* @route PATCH /lang/{id}
 * @group Language Section - lang apis
 * @param {lang_body.model} body.body - language body
 * @returns {success_dto.model} 200 - normal response
@@ -151,7 +151,7 @@ router.patch('/:id', (req, res) => {
 
 /**
 * get lang api
-* @route DELETE /lang/:{id}
+* @route DELETE /lang/{id}
 * @group Language Section - lang apis
 * @param {string} id.path.required - language id - eg: 0ea04144-a9b4-4280-b689-f9f157b50769
 * @returns {object} 200 - eg: { "status": 200, "data": "number of deleted rows: 1" }

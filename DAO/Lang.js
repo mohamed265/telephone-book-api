@@ -5,6 +5,9 @@ module.exports = (sequelize, type) => {
             unique: true,
             primaryKey: true,
             allowNull: false,
+            get: function () {
+                return this.getDataValue('isoCode').toLowerCase();
+            }
         },
         name: type.STRING
     }, {
