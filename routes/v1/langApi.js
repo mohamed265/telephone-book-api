@@ -12,7 +12,7 @@ var langWrapper = require('../../wrappers/LangWrapper');
 var responseUtility = require('../../utils/ResponseUtility');
 
 var exceptionHandler = require('../../utils/ExceptionHandler');
-
+// sync();
 /**
  * @typedef lang_dto
  * @property {string} isoCode.required - lang isoCode - eg: ar

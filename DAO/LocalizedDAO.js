@@ -21,7 +21,7 @@ module.exports = function (daoName) {
                 unique: false
             });
 
-            models[`${daoName}`].belongsToMany(models.Lang, { through: `LK_${daoName}Local` });
+            models[`${daoName}`].belongsToMany(models.Lang, { through: `LK_${daoName}_Local` });
         };
 
         return dao;

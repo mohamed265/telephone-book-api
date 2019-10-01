@@ -1,6 +1,9 @@
 module.exports = function (DAO) {
 
-    var baseService = require('./Base/BaseService')(DAO);
+
+    var wrapper = require(`../../wrappers/BaseLocalizedWrapper`)(`${DAO}`);
+
+    var baseService = require('./Base/BaseService')(DAO, wrapper);
 
     return {
         getAll: (callback) => baseService.getAll(callback),

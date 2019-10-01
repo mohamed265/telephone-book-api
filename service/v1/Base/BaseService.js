@@ -7,9 +7,9 @@ var db = require('../../../DAO');
 
 const ValidationExcepion = require('../../../exceptions/ValidationExcepion');
 
-module.exports = function (DAO) {
+module.exports = function (DAO, wrapper) {
 
-    var wrapper = require(`../../../wrappers/BaseLocalizedWrapper`)(`${DAO}`);
+    // var wrapper = require(`../../../wrappers/BaseLocalizedWrapper`)(`${DAO}`);
 
     var localizedWrapper = require(`../../../wrappers/LocalizedWrapper`)(`${DAO}`);
 
@@ -74,7 +74,7 @@ module.exports = function (DAO) {
                     logger.info(`${DAO} model new values: ${util.inspect(body)}`);
                     return dao.update(body)
                 }).then(model => {
-                    result.locals = undefined;
+                    model.locals = undefined;
                     successCallback(model);
                 }).catch(exception => {
                     errorCallback(exception);
@@ -164,7 +164,7 @@ module.exports = function (DAO) {
                 force: true,
                 where: {
                     LKCityId: id,
-                    LKLangIsoCode: isoCode
+                    l_k_lang_iso_code: isoCode
                 }
             }).then(deletedOwner => {
                 callback(deletedOwner);

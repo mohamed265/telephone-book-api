@@ -1,5 +1,4 @@
 const DAO = require('../DAO');
-const CityModel = require('../models/CityModel');
 
 module.exports = function (daoName) {
 
@@ -44,19 +43,22 @@ module.exports = function (daoName) {
 
             var modlesResults = [];
 
-            models.forEach(model => {
+            if (models) {
+                models.forEach(model => {
 
-                var value = model.value;
+                    var value = model.value;
 
-                var isoCode = model.isoCode;
+                    var isoCode = model.isoCode;
 
-                modlesResults.push({
-                    value: value,
-                    LKLangIsoCode: isoCode,
-                });
+                    modlesResults.push(DAO[`${daoName}Local`].build({
+                        value: value,
+                        LKLangIsoCode: isoCode,
+                        l_k_lang_iso_code: isoCode,
+                        isoCode: isoCode
+                    }));
 
-            })
-
+                })
+            }
             return modlesResults;
         }
     }

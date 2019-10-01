@@ -5,9 +5,9 @@ var util = require('util');
 
 var db = require('../../DAO');
 
-var baseService = require('./Base/BaseService')('Lang');
-
 var langWrapper = require(`../../wrappers/LangWrapper`);
+
+var baseService = require('./Base/BaseService')('Lang', langWrapper);
 
 module.exports = {
     getAll: (callback) => baseService.getAll(callback),
