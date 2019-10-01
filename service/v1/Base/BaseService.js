@@ -9,7 +9,7 @@ const ValidationExcepion = require('../../../exceptions/ValidationExcepion');
 
 module.exports = function (DAO) {
 
-    var wrapper = require(`../../../wrappers/${DAO}Wrapper`);
+    var wrapper = require(`../../../wrappers/BaseLocalizedWrapper`)(`${DAO}`);
 
     var localizedWrapper = require(`../../../wrappers/LocalizedWrapper`)(`${DAO}`);
 
