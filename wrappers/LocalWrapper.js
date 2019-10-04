@@ -2,6 +2,9 @@ const DAO = require('../DAO');
 
 module.exports = function (daoName) {
 
+
+    const modelLocalDAO = require(`../DAO/${daoName}Local`);
+
     return {
         createDTO: (dao) => {
 
@@ -25,7 +28,7 @@ module.exports = function (daoName) {
 
             var isoCode = model.isoCode;
 
-            var dao = DAO[`${daoName}Local`].build({
+            var dao = modelLocalDAO.build({
                 value: value,
                 LKLangIsoCode: isoCode,
             });
@@ -50,11 +53,9 @@ module.exports = function (daoName) {
 
                     var isoCode = model.isoCode;
 
-                    modlesResults.push(DAO[`${daoName}Local`].build({
+                    modlesResults.push(modelLocalDAO.build({
                         value: value,
                         LKLangIsoCode: isoCode,
-                        l_k_lang_iso_code: isoCode,
-                        isoCode: isoCode
                     }));
 
                 })
@@ -64,7 +65,7 @@ module.exports = function (daoName) {
     }
 }
 
-module.exports.createModel = function (dao) {
+module.exports.createModel = function (daoModel) {
 
     var model = {};
 
@@ -72,13 +73,13 @@ module.exports.createModel = function (dao) {
 
     var localsArray = undefined;
 
-    if (dao[`LK_${daoName}_Locals`] && dao.LK_Langs) {
+    if (daoModel[`LK_${daoName}_Locals`] && daoModel.LK_Langs) {
         locals = {};
 
         localsArray = [];
 
-        dao[`LK_${daoName}_Locals`].forEach(local => {
-            var isoCode = getIsoCodeByLangId(dao.LK_Langs, local.LKLangId);
+        daoModel[`LK_${daoName}_Locals`].forEach(local => {
+            var isoCode = getIsoCodeByLangId(daoModel.LK_Langs, local.LKLangId);
 
             locals[isoCode] = local.value;
 

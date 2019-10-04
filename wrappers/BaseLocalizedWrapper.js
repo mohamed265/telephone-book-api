@@ -1,10 +1,12 @@
 const db = require('../DAO');
 
-module.exports = function (DAO) {
+module.exports = function (daoName) {
 
-    const LocalizedModel = require(`../models/${DAO}Model`);
+    const modelDAO = require(`../DAO/${daoName}`);
 
-    const localWrapper = require(`./LocalWrapper`)(`${DAO}`);
+    const LocalizedModel = require(`../models/${daoName}Model`);
+
+    const localWrapper = require(`./LocalWrapper`)(`${daoName}`);
 
     return {
         createDTO: (dao) => {
@@ -37,12 +39,12 @@ module.exports = function (DAO) {
         createDAO: (model) => {
             var name = model.name;
 
-            var dao = db[`${DAO}`].build({
+            var dao = modelDAO.build({
                 name: name,
                 locals: localWrapper.createDAOArray(model.locals)
             }, {
                 include: [{
-                    association: db[`${DAO}`].locals,
+                    association: modelDAO.locals,
                     as: 'locals'
                 }]
             });

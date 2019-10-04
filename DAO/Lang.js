@@ -1,25 +1,37 @@
-module.exports = (sequelize, type) => {
-    lang = sequelize.define('LK_Lang', {
-        isoCode: {
-            type: type.STRING,
-            unique: true,
-            primaryKey: true,
-            allowNull: false,
-            get: function () {
-                return this.getDataValue('isoCode').toLowerCase();
-            }
-        },
-        name: type.STRING
-    }, {
-        setterMethods: {
-            isoCode: function (value) {
-                return this.setDataValue('isoCode', value.toString().toLowerCase());
-            },
-        }
-    })
+const Sequelize = require('Sequelize');
 
-    lang.modelName = 'Lang';
+class Lang extends Sequelize.Model {
 
-    return lang;
+    get isoCode() {
+        return this.isoCode;
+    }
+
+    set isoCode(isoCode) {
+        this.setDataValue('isoCode', isoCode);
+    }
+
+    get name() {
+        return this.name;
+    }
+
+    set name(name) {
+        this.setDataValue('name', name);
+    }
 }
 
+Lang.init({
+    isoCode: {
+        type: Sequelize.UUID,
+        unique: true,
+        primaryKey: true,
+        allowNull: false,
+        // defaultValue: Sequelize.UUIDV1
+    },
+    name: Sequelize.STRING
+}, {
+    sequelize,
+    modelName: 'LK_Lang'
+});
+
+
+module.exports = Lang;

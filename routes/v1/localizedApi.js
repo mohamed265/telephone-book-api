@@ -9,15 +9,15 @@ var exceptionHandler = require('../../utils/ExceptionHandler');
 
 var localizedValidator = require(`../../validators/localizedValidator`);
 
-module.exports = function (DAO) {
+module.exports = function (daoName) {
 
-    var routePath = DAO.slice(0, 1).toString().toLowerCase() + DAO.slice(1);
+    var routePath = daoName.slice(0, 1).toString().toLowerCase() + daoName.slice(1);
 
-    var localizedService = require('../../service/v1/LocalizedService')(`${DAO}`);
+    var localizedService = require('../../service/v1/LocalizedService')(`${daoName}`);
 
-    var baseLocalizedWrapper = require(`../../wrappers/BaseLocalizedWrapper`)(`${DAO}`);
+    var baseLocalizedWrapper = require(`../../wrappers/BaseLocalizedWrapper`)(`${daoName}`);
 
-    var localizedWrapper = require('../../wrappers/LocalizedWrapper')(`${DAO}`);
+    var localizedWrapper = require('../../wrappers/LocalizedWrapper')(`${daoName}`);
 
 
     /**
@@ -40,10 +40,10 @@ module.exports = function (DAO) {
     * @returns {success_list_dto.model} 200 - normal response
     * @returns {internal_error_respone.model} 500 - error response
     */
-    router.get(`/${DAO}/local`, (req, res) => {
+    router.get(`/${daoName}/local`, (req, res) => {
         try {
 
-            logger.info(`list all ${DAO} model`);
+            logger.info(`list all ${daoName} model`);
 
             localizedService.getAllIncludeLocals(daos => {
                 var localizedDtos = daos.map(localizedDao => baseLocalizedWrapper.createDTO(localizedDao));
@@ -71,20 +71,20 @@ module.exports = function (DAO) {
     * @returns {bad_request.model} 400 - bad request response
     * @returns {internal_error_respone.model} 500 - error response
     */
-    router.get(`/${DAO}/:id/local`, (req, res) => {
+    router.get(`/${daoName}/:id/local`, (req, res) => {
         try {
             localizedValidator.validateParams(req.params);
 
             const id = req.params.id;
 
-            logger.info(`loading ${DAO} model with id: ${id}`);
+            logger.info(`loading ${daoName} model with id: ${id}`);
 
             localizedService.getByIdWithLocals(id, localizedDao => {
                 if (localizedDao) {
-                    logger.info(`${DAO} model: ${id} loaded successfully ...`);
+                    logger.info(`${daoName} model: ${id} loaded successfully ...`);
                     responseUtility.createSuccessResponse(res, baseLocalizedWrapper.createDTO(localizedDao).locals || []);
                 } else {
-                    logger.info(`${DAO} model: ${id} not found`);
+                    logger.info(`${daoName} model: ${id} not found`);
                     responseUtility.createNotFoundResponse(res);
                 }
             });
@@ -110,16 +110,16 @@ module.exports = function (DAO) {
     * @returns {bad_request.model} 400 - bad request response
     * @returns {internal_error_respone.model} 500 - error response
     */
-    router.post(`/${DAO}/:id/local`, (req, res) => {
+    router.post(`/${daoName}/:id/local`, (req, res) => {
         try {
             localizedValidator.validateParams(req.params);
 
             const id = req.params.id;
 
-            logger.info(`loading ${DAO} model with id: ${id}`);
+            logger.info(`loading ${daoName} model with id: ${id}`);
 
             localizedService.saveLocal(id, req.body, model => {
-                logger.info(`${DAO} local model saved successfully ...`);
+                logger.info(`${daoName} local model saved successfully ...`);
                 responseUtility.createCreatedResponse(res, localizedWrapper.createDTO(model));
             }, exception => {
                 exceptionHandler.handle(res, exception);
@@ -146,7 +146,7 @@ module.exports = function (DAO) {
     * @returns {bad_request.model} 400 - bad request response
     * @returns {internal_error_respone.model} 500 - error response
     */
-    router.patch(`/${DAO}/:id/local/:isoCode`, (req, res) => {
+    router.patch(`/${daoName}/:id/local/:isoCode`, (req, res) => {
         try {
             localizedValidator.validateParams(req.params);
 
@@ -154,10 +154,10 @@ module.exports = function (DAO) {
 
             const isoCode = req.params.isoCode;
 
-            logger.info(`updating local ${DAO} model with id: ${id} and Local ${isoCode}`);
+            logger.info(`updating local ${daoName} model with id: ${id} and Local ${isoCode}`);
 
             localizedService.updateLocal(id, isoCode, req.body, model => {
-                logger.info(`${DAO} local model saved successfully ...`);
+                logger.info(`${daoName} local model saved successfully ...`);
                 responseUtility.createCreatedResponse(res, localizedWrapper.createDTO(model));
             }, exception => {
                 exceptionHandler.handle(res, exception);
@@ -179,7 +179,7 @@ module.exports = function (DAO) {
     * @returns {bad_request.model} 400 - bad request response
     * @returns {internal_error_respone.model} 500 - error response
     */
-    router.delete(`/${DAO}/:id/local/:isoCode`, (req, res) => {
+    router.delete(`/${daoName}/:id/local/:isoCode`, (req, res) => {
         try {
             localizedValidator.validateParams(req.params);
 
@@ -187,10 +187,10 @@ module.exports = function (DAO) {
 
             const isoCode = req.params.isoCode;
 
-            logger.info(`deleteing ${DAO} local model with id: ${id}`);
+            logger.info(`deleteing ${daoName} local model with id: ${id}`);
 
             localizedService.deleteLocal(id, isoCode, deletedOwner => {
-                logger.info(`${DAO} model: ${id} local: ${isoCode} deleted successfully ...`);
+                logger.info(`${daoName} model: ${id} local: ${isoCode} deleted successfully ...`);
                 responseUtility.createSuccessResponse(res,
                     `number of deleted rows: ${deletedOwner}`
                 );
@@ -225,7 +225,7 @@ module.exports = function (DAO) {
     router.get(`/${routePath}/`, (req, res) => {
         try {
 
-            logger.info(`list all ${DAO} model`);
+            logger.info(`list all ${daoName} model`);
 
             localizedService.getAll(daos => {
                 var localizedDtos = daos.map(localizedDao => baseLocalizedWrapper.createDTO(localizedDao));
@@ -254,20 +254,20 @@ module.exports = function (DAO) {
     * @returns {bad_request.model} 400 - bad request response
     * @returns {internal_error_respone.model} 500 - error response
     */
-    router.get(`/${DAO}/:id`, (req, res) => {
+    router.get(`/${daoName}/:id`, (req, res) => {
         try {
             localizedValidator.validateParams(req.params);
 
             const id = req.params.id;
 
-            logger.info(`loading ${DAO} model with id: ${id}`);
+            logger.info(`loading ${daoName} model with id: ${id}`);
 
             localizedService.getByIdWithLocals(id, localizedDao => {
                 if (localizedDao) {
-                    logger.info(`${DAO} model: ${id} loaded successfully ...`);
+                    logger.info(`${daoName} model: ${id} loaded successfully ...`);
                     responseUtility.createSuccessResponse(res, baseLocalizedWrapper.createDTO(localizedDao));
                 } else {
-                    logger.info(`${DAO} model: ${id} not found`);
+                    logger.info(`${daoName} model: ${id} not found`);
                     responseUtility.createNotFoundResponse(res);
                 }
             });
@@ -292,13 +292,13 @@ module.exports = function (DAO) {
     * @returns {bad_request.model} 400 - bad request response
     * @returns {internal_error_respone.model} 500 - error response
     */
-    router.post(`/${DAO}/`, (req, res) => {
+    router.post(`/${daoName}/`, (req, res) => {
 
         try {
             localizedValidator.validate(req.body);
 
             localizedService.save(req.body, model => {
-                logger.info(`${DAO} model saved successfully ...`);
+                logger.info(`${daoName} model saved successfully ...`);
                 responseUtility.createCreatedResponse(res, baseLocalizedWrapper.createDTO(model));
             }, exception => {
                 exceptionHandler.handle(res, exception);
@@ -318,7 +318,7 @@ module.exports = function (DAO) {
     * @returns {bad_request.model} 400 - bad request response
     * @returns {internal_error_respone.model} 500 - error response
     */
-    router.patch(`/${DAO}/:id`, (req, res) => {
+    router.patch(`/${daoName}/:id`, (req, res) => {
         try {
 
             localizedValidator.validateParams(req.params);
@@ -328,7 +328,7 @@ module.exports = function (DAO) {
             const id = req.params.id;
 
             localizedService.update(id, req.body, model => {
-                logger.info(`${DAO} model ${id} updated successfully ...`);
+                logger.info(`${daoName} model ${id} updated successfully ...`);
                 responseUtility.createCreatedResponse(res, baseLocalizedWrapper.createDTO(model));
             }, exception => {
                 exceptionHandler.handle(res, exception);
@@ -348,7 +348,7 @@ module.exports = function (DAO) {
     * @returns {bad_request.model} 400 - bad request response
     * @returns {internal_error_respone.model} 500 - error response
     */
-    router.delete(`/${DAO}/:id`, (req, res) => {
+    router.delete(`/${daoName}/:id`, (req, res) => {
 
         try {
             localizedValidator.validateParams(req.params);
@@ -356,7 +356,7 @@ module.exports = function (DAO) {
             const id = req.params.id;
 
             localizedService.delete(id, deletedOwner => {
-                logger.info(`${DAO} model: ${id} deleted successfully ...`);
+                logger.info(`${daoName} model: ${id} deleted successfully ...`);
                 responseUtility.createSuccessResponse(res,
                     `number of deleted rows: ${deletedOwner}`
                 );

@@ -9,13 +9,17 @@ const ValidationExcepion = require('../../../exceptions/ValidationExcepion');
 
 module.exports = function (DAO, wrapper) {
 
+    var daoModel = require(`../../../DAO/${DAO}`);
+
+    var daoLocalModel = daoLocalModel || {};
+
     // var wrapper = require(`../../../wrappers/BaseLocalizedWrapper`)(`${DAO}`);
 
     var localizedWrapper = require(`../../../wrappers/LocalizedWrapper`)(`${DAO}`);
 
     return {
         getAll: function (callback) {
-            db[DAO].findAll().then(
+            daoModel.findAll().then(
                 daos => {
                     callback(daos);
                 }
@@ -23,9 +27,9 @@ module.exports = function (DAO, wrapper) {
         },
         getAllIncludeLocals: function (callback) {
 
-            db[DAO].findAll({
+            daoModel.findAll({
                 include: [
-                    { model: db[`${DAO}Local`], as: 'locals' }
+                    { model: daoLocalModel, as: 'locals' }
                 ]
             }).then(
                 daos => {
@@ -34,16 +38,16 @@ module.exports = function (DAO, wrapper) {
             );
         },
         getById: function (id, callback) {
-            db[DAO].findByPk(id).then(
+            daoModel.findByPk(id).then(
                 dao => {
                     callback(dao);
                 }
             );
         },
         getByIdWithLocals: function (id, callback) {
-            db[DAO].findByPk(id, {
+            daoModel.findByPk(id, {
                 include: [
-                    { model: db[`${DAO}Local`], as: 'locals' }
+                    { model: daoLocalModel, as: 'locals' }
                 ]
             }).then(
                 dao => {
@@ -69,7 +73,7 @@ module.exports = function (DAO, wrapper) {
 
             logger.info(`update ${DAO} model with id: ${id}`);
 
-            db[DAO].findByPk(id)
+            daoModel.findByPk(id)
                 .then(dao => {
                     logger.info(`${DAO} model new values: ${util.inspect(body)}`);
                     return dao.update(body)
@@ -84,7 +88,7 @@ module.exports = function (DAO, wrapper) {
 
         //     logger.info(`update ${DAO} model with id: ${id}`);
 
-        //     // db[DAO].findByPk(id)
+        //     // daoModel.findByPk(id)
         //     //     .then(dao => {
         //     //         logger.info(`${DAO} model new values: ${util.inspect(body)}`);
         //     //         return dao.update(body)
@@ -97,9 +101,9 @@ module.exports = function (DAO, wrapper) {
         //     //     return dao.save({ transaction: t });
         //     // })
 
-        //     db[DAO].findByPk(id, {
+        //     daoModel.findByPk(id, {
         //         include: [
-        //             { model: db[`${DAO}Local`], as: 'locals' }
+        //             { model: daoLocalModel, as: 'locals' }
         //         ]
         //     }).then(function (dao) {
         //         if (dao) {
@@ -150,7 +154,7 @@ module.exports = function (DAO, wrapper) {
 
             logger.info(`delete ${DAO} model with id: ${id}`);
 
-            db[DAO].destroy({
+            daoModel.destroy({
                 where: { id: id }
             }).then(deletedOwner => {
                 callback(deletedOwner);
@@ -160,7 +164,7 @@ module.exports = function (DAO, wrapper) {
 
             logger.info(`delete ${DAO} local with id: ${id}, isoCode: ${isoCode}`);
 
-            db[`${DAO}Local`].destroy({
+            daoLocalModel.destroy({
                 force: true,
                 where: {
                     LKCityId: id,
@@ -176,7 +180,7 @@ module.exports = function (DAO, wrapper) {
 
             logger.info(`adding local for ${DAO} model: ${util.inspect(body)}`);
 
-            db[DAO].findByPk(modelId).then(modelDao => {
+            daoModel.findByPk(modelId).then(modelDao => {
                 return dao.save();
             }).then(result => {
                 successCallback(result);
@@ -197,7 +201,7 @@ module.exports = function (DAO, wrapper) {
 
             where[`LK${DAO}Id`] = modelId;
 
-            db[`${DAO}Local`].findOne({
+            daoLocalModel.findOne({
                 where: where
             }).then(modelDao => {
                 if (modelDao)

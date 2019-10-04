@@ -1,5 +1,6 @@
 const DAO = require('../DAO');
 const LangModel = require('../models/LangModel');
+const Lang = require('../DAO/Lang');
 
 module.exports.createDTO = function (langDAO) {
     var langDTO = {};
@@ -29,7 +30,7 @@ module.exports.createDAO = function (langModel) {
 
     var isoCode = langModel.isoCode;
 
-    var langDao = DAO.Lang.build({
+    var langDao = Lang.build({
         name: name,
         isoCode: isoCode
     });
