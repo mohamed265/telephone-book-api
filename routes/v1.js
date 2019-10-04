@@ -6,7 +6,7 @@ var version = 'v1';
 
 const listDirUtility = require('../utils/listDirFiles');
 
-listDirUtility.list(path.join(__dirname, version), ['documentation.js', 'localizedApi.js'], function (file) {
+listDirUtility.list(path.join(__dirname, version), ['documentation.js', 'localizedApi.js', 'cityApi.js'], function (file) {
     var route = require(path.join(__dirname, version, file));
     router.use('/' + file.slice(0, -6), route);
 })
