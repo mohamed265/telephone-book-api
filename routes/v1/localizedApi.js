@@ -148,7 +148,7 @@ module.exports = function (daoName) {
     */
     router.patch(`/${daoName}/:id/local/:isoCode`, (req, res) => {
         try {
-            localizedValidator.validateParams(req.params);
+            localizedValidator.validateLocalParams(req.params);
 
             const id = req.params.id;
 
@@ -181,7 +181,7 @@ module.exports = function (daoName) {
     */
     router.delete(`/${daoName}/:id/local/:isoCode`, (req, res) => {
         try {
-            localizedValidator.validateParams(req.params);
+            localizedValidator.validateLocalParams(req.params);
 
             const id = req.params.id;
 

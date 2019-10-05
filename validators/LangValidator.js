@@ -1,34 +1,40 @@
 const ValidationExcepion = require('../exceptions/ValidationExcepion');
 
-const commonValidators = require('./CommonValidators');
+const CommonValidator = require('./CommonValidator');
 
-module.exports.validate = function (lang) {
-    var errors = [];
+class LangValidator extends CommonValidator {
 
-    errors = errors.concat(commonValidators.validateString('isoCode', lang.isoCode, 255));
+    validate(lang) {
+        var errors = [];
 
-    errors = errors.concat(commonValidators.validateMaxLengthString('name', lang.name, 255));
+        errors = errors.concat(this.validateString('isoCode', lang.isoCode, 255));
 
-    if (errors.length)
-        throw new ValidationExcepion('Validation LangModel faild', errors);
+        errors = errors.concat(this.validateMaxLengthString('name', lang.name, 255));
+
+        if (errors.length)
+            throw new ValidationExcepion('Validation LangModel faild', errors);
+    }
+
+    validateLength(lang) {
+        var errors = [];
+
+        errors = errors.concat(this.validateMaxLengthString('isoCode', lang.isoCode, 255));
+
+        errors = errors.concat(this.validateMaxLengthString('name', lang.name, 255));
+
+        if (errors.length)
+            throw new ValidationExcepion('Validation LangModel faild', errors);
+    }
+
+    validateParams(params) {
+        var errors = [];
+
+        errors = errors.concat(this.validateExactLengthString('id', params.id, 36));
+
+        if (errors.length)
+            throw new ValidationExcepion('Validation Lang Params faild', errors);
+    }
 }
 
-module.exports.validateLength = function (lang) {
-    var errors = [];
+module.exports = new LangValidator();
 
-    errors = errors.concat(commonValidators.validateMaxLengthString('isoCode', lang.isoCode, 255));
-
-    errors = errors.concat(commonValidators.validateMaxLengthString('name', lang.name, 255));
-
-    if (errors.length)
-        throw new ValidationExcepion('Validation LangModel faild', errors);
-}
-
-module.exports.validateParams = function (params) {
-    var errors = [];
-
-    errors = errors.concat(commonValidators.validateExactLengthString('id', params.id, 36));
-
-    if (errors.length)
-        throw new ValidationExcepion('Validation Lang Params faild', errors);
-}
