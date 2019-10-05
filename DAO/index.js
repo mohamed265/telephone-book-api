@@ -10,17 +10,17 @@ const listDirUtility = require('../utils/listDirFiles');
 
 var dbConfig = require('./../database/DBConfig');
 
-var db = {};
+var DAO = {};
 
 
 listDirUtility.list(__dirname, [basename], function (file) {
   var model = require('./' + file);
-  db[model.name] = model;
+  DAO[model.name] = model;
 });
 
 // sync();
 
-db.sequelize = sequelize;
-db.Sequelize = Sequelize;
+DAO.sequelize = sequelize;
+DAO.Sequelize = Sequelize;
 
-module.exports = db;
+module.exports = DAO;

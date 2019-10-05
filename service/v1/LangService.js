@@ -1,13 +1,13 @@
 
 var logger = require('../../utils/logger.js').logger;
 
-var util = require('util');
-
-var db = require('../../DAO');
+var DAO = require('../../DAO');
 
 var langWrapper = require(`../../wrappers/LangWrapper`);
 
-var baseService = require('./Base/BaseService')('Lang', langWrapper);
+var BaseService = require('./Base/BaseService')
+
+const baseService = new BaseService('Lang', langWrapper);
 
 module.exports = {
     getAll: (callback) => baseService.getAll(callback),
@@ -15,7 +15,7 @@ module.exports = {
     getById: (id, callback) => baseService.getById(id, callback),
 
     getByIsoCode: (isoCode, callback) => {
-        db.Lang
+        DAO.Lang
             .findOne({ where: { isoCode: isoCode } })
             .then(
                 dao => {

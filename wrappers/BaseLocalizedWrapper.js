@@ -1,4 +1,4 @@
-const db = require('../DAO');
+const DAO = require('../DAO');
 
 module.exports = function (daoName) {
 

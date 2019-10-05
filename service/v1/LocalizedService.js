@@ -3,27 +3,29 @@ module.exports = function (daoName) {
 
     var wrapper = require(`../../wrappers/BaseLocalizedWrapper`)(`${daoName}`);
 
-    var baseService = require('./Base/BaseService')(daoName, wrapper);
+    var BaseServiceLocal = require('./Base/BaseServiceLocal')
+    
+    const baseServiceLocal = new BaseServiceLocal(daoName, wrapper);
 
     return {
-        getAll: (callback) => baseService.getAll(callback),
+        getAll: (callback) => baseServiceLocal.getAll(callback),
 
-        getAllIncludeLocals: (callback) => baseService.getAllIncludeLocals(callback),
+        getAllIncludeLocals: (callback) => baseServiceLocal.getAllIncludeLocals(callback),
 
-        getById: (id, callback) => baseService.getById(id, callback),
+        getById: (id, callback) => baseServiceLocal.getById(id, callback),
 
-        getByIdWithLocals: (id, callback) => baseService.getByIdWithLocals(id, callback),
+        getByIdWithLocals: (id, callback) => baseServiceLocal.getByIdWithLocals(id, callback),
 
-        save: (body, successCallback, errorCallback) => baseService.save(body, successCallback, errorCallback),
+        save: (body, successCallback, errorCallback) => baseServiceLocal.save(body, successCallback, errorCallback),
 
-        update: (id, body, successCallback, errorCallback) => baseService.update(id, body, successCallback, errorCallback),
+        update: (id, body, successCallback, errorCallback) => baseServiceLocal.update(id, body, successCallback, errorCallback),
 
-        delete: (id, callback) => baseService.delete(id, callback),
+        delete: (id, callback) => baseServiceLocal.delete(id, callback),
 
-        deleteLocal: (id, isoCode, callback) => baseService.deleteLocal(id, isoCode, callback),
+        deleteLocal: (id, isoCode, callback) => baseServiceLocal.deleteLocal(id, isoCode, callback),
 
-        saveLocal: (id, body, successCallback, errorCallback) => baseService.saveLocal(id, body, successCallback, errorCallback),
+        saveLocal: (id, body, successCallback, errorCallback) => baseServiceLocal.saveLocal(id, body, successCallback, errorCallback),
 
-        updateLocal: (id, isoCode, body, successCallback, errorCallback) => baseService.updateLocal(id, isoCode, body, successCallback, errorCallback)
+        updateLocal: (id, isoCode, body, successCallback, errorCallback) => baseServiceLocal.updateLocal(id, isoCode, body, successCallback, errorCallback)
     }
 }
