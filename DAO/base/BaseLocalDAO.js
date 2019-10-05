@@ -19,7 +19,7 @@ class BaseLocalDAO extends Sequelize.Model {
     }
 }
 
-BaseLocalDAO.init({
+BaseLocalDAO.tableAttributes = {
     id: {
         type: Sequelize.UUID,
         unique: true,
@@ -31,9 +31,6 @@ BaseLocalDAO.init({
         type: Sequelize.STRING,
         allowNull: false,
     },
-}, {
-    sequelize,
-    modelName: 'UNUSED_BaseLocalDAO'
-});
+};
 
 module.exports = BaseLocalDAO;
