@@ -20,4 +20,7 @@ Type.locals = Type.hasMany(TypeLocal, {
 
 Type.belongsToMany(Lang, { through: 'LK_Type_Local' });
 
+Type.includes = [
+    { model: TypeLocal, as: 'locals' }
+];
 module.exports = Type;

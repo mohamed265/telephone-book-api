@@ -20,4 +20,8 @@ Area.locals = Area.hasMany(AreaLocal, {
 
 Area.belongsToMany(Lang, { through: 'LK_Area_Local' });
 
+Area.includes = [
+    { model: AreaLocal, as: 'locals' }
+];
+
 module.exports = Area;

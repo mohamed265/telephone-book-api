@@ -20,5 +20,9 @@ Tag.locals = Tag.hasMany(TagLocal, {
 
 Tag.belongsToMany(Lang, { through: 'LK_Tag_Local' });
 
+Tag.includes = [
+    { model: TagLocal, as: 'locals' }
+];
+
 module.exports = Tag;
 

@@ -22,10 +22,8 @@ class BaseServiceLocal extends BaseService {
 
     getAllIncludeLocals(callback) {
 
-        daoModel.findAll({
-            include: [
-                { model: this.daoLocalModel, as: 'locals' }
-            ]
+        this.daoModel.findAll({
+            include: this.daoModel.includes
         }).then(
             daos => {
                 callback(daos);
@@ -34,10 +32,8 @@ class BaseServiceLocal extends BaseService {
     }
     
     getByIdWithLocals(id, callback) {
-        daoModel.findByPk(id, {
-            include: [
-                { model: this.daoLocalModel, as: 'locals' }
-            ]
+        this.daoModel.findByPk(id, {
+            include: this.daoModel.includes
         }).then(
             dao => {
                 callback(dao);
@@ -66,7 +62,7 @@ class BaseServiceLocal extends BaseService {
 
         logger.info(`adding local for ${this.daoName} model: ${util.inspect(body)}`);
 
-        daoModel.findByPk(modelId).then(modelDao => {
+        this.daoModel.findByPk(modelId).then(modelDao => {
             return dao.save();
         }).then(result => {
             successCallback(result);
@@ -112,7 +108,7 @@ module.exports = BaseServiceLocal;
 
     //     logger.info(`update ${this.daoName} model with id: ${id}`);
 
-    //     // daoModel.findByPk(id)
+    //     // this.daoModel.findByPk(id)
     //     //     .then(dao => {
     //     //         logger.info(`${this.daoName} model new values: ${util.inspect(body)}`);
     //     //         return dao.update(body)
@@ -125,7 +121,7 @@ module.exports = BaseServiceLocal;
     //     //     return dao.save({ transaction: t });
     //     // })
 
-    //     daoModel.findByPk(id, {
+    //     this.daoModel.findByPk(id, {
     //         include: [
     //             { model: this.daoLocalModel, as: 'locals' }
     //         ]
