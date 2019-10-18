@@ -1,14 +1,7 @@
 const Sequelize = require('Sequelize');
+const BaseDAO = require('./BaseDAO');
 
-class BaseLocalDAO extends Sequelize.Model {
-
-    get id() {
-        return this.id;
-    }
-
-    set id(id) {
-        this.setDataValue('id', id);
-    }
+class BaseLocalDAO extends BaseDAO {
 
     get name() {
         return this.name;
@@ -20,17 +13,16 @@ class BaseLocalDAO extends Sequelize.Model {
 }
 
 BaseLocalDAO.tableAttributes = {
-    id: {
-        type: Sequelize.UUID,
-        unique: true,
-        primaryKey: true,
-        allowNull: false,
-        defaultValue: Sequelize.UUIDV1
-    },
-    name: {
-        type: Sequelize.STRING,
-        allowNull: false,
-    },
 };
+
+Object.keys(BaseDAO.tableAttributes).forEach(key => {
+    BaseLocalDAO.tableAttributes[key] = BaseDAO.tableAttributes[key];
+});
+
+BaseLocalDAO.tableAttributes.name = {
+    type: Sequelize.STRING,
+    allowNull: false,
+}
+
 
 module.exports = BaseLocalDAO;

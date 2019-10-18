@@ -1,15 +1,8 @@
 const Sequelize = require('Sequelize');
 const Lang = require('../Lang');
+const BaseDAO = require('./BaseDAO');
 
 class BaseLocalValueDAO extends Sequelize.Model {
-
-    get id() {
-        return this.id;
-    }
-
-    set id(id) {
-        this.setDataValue('id', id);
-    }
 
     get isoCode() {
         return this.isoCode;
@@ -29,25 +22,15 @@ class BaseLocalValueDAO extends Sequelize.Model {
 }
 
 BaseLocalValueDAO.tableAttributes = {
-    id: {
-        type: Sequelize.UUID,
-        unique: true,
-        primaryKey: true,
-        allowNull: false,
-        defaultValue: Sequelize.UUIDV1
-    },
-    // isoCode: {
-    //     type: Sequelize.UUID,
-    //     allowNull: false,
-    //     references: {
-    //         model: Lang,
-    //         key: 'iso_code'
-    //     }
-    // },
-    value: {
-        type: Sequelize.STRING,
-        allowNull: false,
-    },
+};
+
+Object.keys(BaseDAO.tableAttributes).forEach(key => {
+    BaseLocalValueDAO.tableAttributes[key] = BaseDAO.tableAttributes[key];
+});
+
+BaseLocalValueDAO.tableAttributes.value = {
+    type: Sequelize.STRING,
+    allowNull: false,
 };
 
 module.exports = BaseLocalValueDAO;
