@@ -6,22 +6,26 @@ const Sequelize = require('Sequelize');
 class Area extends BaseLocalDAO {
 
 }
+
 Area.init(
     BaseLocalDAO.tableAttributes, {
     sequelize,
     modelName: 'LK_Area'
 });
 
+Area.daoName = 'Area';
 
-Area.locals = Area.hasMany(AreaLocal, {
-    as: 'locals',
+Area.tableAttributes = BaseLocalDAO.tableAttributes;
+
+Area.areaLocals = Area.hasMany(AreaLocal, {
+    as: 'areaLocals',
     unique: false
 });
 
 Area.belongsToMany(Lang, { through: 'LK_Area_Local' });
 
 Area.includes = [
-    { model: AreaLocal, as: 'locals' }
+    { model: AreaLocal, as: 'areaLocals' }
 ];
 
 module.exports = Area;

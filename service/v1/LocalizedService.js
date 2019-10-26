@@ -1,7 +1,10 @@
 module.exports = function (daoName) {
 
+    //var wrapper = require(`../../wrappers/BaseLocalizedWrapper`)(`${daoName}`);
 
-    var wrapper = require(`../../wrappers/BaseLocalizedWrapper`)(`${daoName}`);
+    let GnericWrapper = require('../../wrappers/GenericWrapper.js');
+
+    let wrapper = new GnericWrapper(daoName);
 
     var BaseServiceLocal = require('./Base/BaseServiceLocal')
     

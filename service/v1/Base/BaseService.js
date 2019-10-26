@@ -53,7 +53,10 @@ class BaseService {
         this.daoModel.findByPk(id)
             .then(dao => {
                 logger.info(`${this.daoName} model new values: ${util.inspect(body)}`);
-                return dao.update(body)
+                if (dao)
+                    return dao.update(body)
+                else
+                    throw new Error(`Model with id: ${id}, Not Found`);
             }).then(model => {
                 model.locals = undefined;
                 successCallback(model);

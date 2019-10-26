@@ -19,7 +19,7 @@ class Lang extends Sequelize.Model {
     }
 }
 
-Lang.init({
+Lang.tableAttributes = {
     isoCode: {
         type: Sequelize.UUID,
         unique: true,
@@ -28,7 +28,11 @@ Lang.init({
         // defaultValue: Sequelize.UUIDV1
     },
     name: Sequelize.STRING
-}, {
+};
+
+Lang.daoName = 'Lang';
+
+Lang.init(Lang.tableAttributes, {
     sequelize,
     modelName: 'LK_Lang'
 });

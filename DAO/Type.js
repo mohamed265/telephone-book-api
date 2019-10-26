@@ -12,15 +12,18 @@ Type.init(
     modelName: 'LK_Type'
 });
 
+Type.daoName = 'Type';
 
-Type.locals = Type.hasMany(TypeLocal, {
-    as: 'locals',
+Type.tableAttributes = BaseLocalDAO.tableAttributes;
+
+Type.typeLocals = Type.hasMany(TypeLocal, {
+    as: 'typeLocals',
     unique: false
 });
 
 Type.belongsToMany(Lang, { through: 'LK_Type_Local' });
 
 Type.includes = [
-    { model: TypeLocal, as: 'locals' }
+    { model: TypeLocal, as: 'typeLocals' }
 ];
 module.exports = Type;

@@ -13,9 +13,12 @@ Country.init(
     modelName: 'LK_Country'
 });
 
+Country.daoName = 'Country';
 
-Country.locals = Country.hasMany(CountryLocal, {
-    as: 'locals',
+Country.tableAttributes = BaseLocalDAO.tableAttributes;
+
+Country.countryLocals = Country.hasMany(CountryLocal, {
+    as: 'countryLocals',
     unique: false
 });
 
@@ -28,7 +31,7 @@ Country.belongsToMany(Lang, { through: 'LK_Country_Local' });
 
 
 Country.includes = [
-    { model: CountryLocal, as: 'locals' },
+    { model: CountryLocal, as: 'countryLocals' },
     { model: City, as: 'cities' }
 ];
 

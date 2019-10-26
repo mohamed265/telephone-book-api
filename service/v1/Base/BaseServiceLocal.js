@@ -17,7 +17,7 @@ class BaseServiceLocal extends BaseService {
 
         this.daoLocalModel = require(`../../../DAO/${daoName}Local`);
 
-        this.localizedWrapper = require(`../../../wrappers/LocalizedWrapper`)(`${daoName}`);
+        // this.localizedWrapper = require(`../../../wrappers/LocalizedWrapper`)(`${daoName}`);
     }
 
     getAllIncludeLocals(callback) {
@@ -30,7 +30,7 @@ class BaseServiceLocal extends BaseService {
             }
         );
     }
-    
+
     getByIdWithLocals(id, callback) {
         this.daoModel.findByPk(id, {
             include: this.daoModel.includes
@@ -40,17 +40,20 @@ class BaseServiceLocal extends BaseService {
             }
         );
     }
-   
+
     deleteLocal(id, isoCode, callback) {
 
         logger.info(`delete ${this.daoName} local with id: ${id}, isoCode: ${isoCode}`);
 
+        var where = {
+            l_k_lang_iso_code: isoCode
+        };
+
+        where[`LK${this.daoName}Id`] = id;
+
         this.daoLocalModel.destroy({
             force: true,
-            where: {
-                LKCityId: id,
-                l_k_lang_iso_code: isoCode
-            }
+            where: where
         }).then(deletedOwner => {
             callback(deletedOwner);
         });
@@ -58,7 +61,7 @@ class BaseServiceLocal extends BaseService {
 
     saveLocal(modelId, body, successCallback, errorCallback) {
 
-        var dao = this.localizedWrapper.createDAO(modelId, body);
+        var dao = this.wrapper.createLocalDAO(modelId, body);
 
         logger.info(`adding local for ${this.daoName} model: ${util.inspect(body)}`);
 

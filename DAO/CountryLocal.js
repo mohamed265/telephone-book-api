@@ -9,6 +9,8 @@ CountryLocal.init(
     sequelize,
     modelName: 'LK_Country_Local'
 });
+CountryLocal.daoName = 'CountryLocal';
 
+CountryLocal.tableAttributes = BaseLocalValueDAO.tableAttributes;
 
 module.exports = CountryLocal;

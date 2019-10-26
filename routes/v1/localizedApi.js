@@ -15,10 +15,9 @@ module.exports = function (daoName) {
 
     var localizedService = require('../../service/v1/LocalizedService')(`${daoName}`);
 
-    var baseLocalizedWrapper = require(`../../wrappers/BaseLocalizedWrapper`)(`${daoName}`);
+    let GnericWrapper = require('../../wrappers/GenericWrapper.js');
 
-    var localizedWrapper = require('../../wrappers/LocalizedWrapper')(`${daoName}`);
-
+    let wrapper = new GnericWrapper(daoName);
 
     /**
      * @typedef city_dto
@@ -46,7 +45,7 @@ module.exports = function (daoName) {
             logger.info(`list all ${daoName} model`);
 
             localizedService.getAllIncludeLocals(daos => {
-                var localizedDtos = daos.map(localizedDao => baseLocalizedWrapper.createDTO(localizedDao));
+                var localizedDtos = daos.map(localizedDao => wrapper.createDTO(localizedDao));
                 responseUtility.createSuccessResponse(res, localizedDtos);
             });
 
@@ -82,7 +81,7 @@ module.exports = function (daoName) {
             localizedService.getByIdWithLocals(id, localizedDao => {
                 if (localizedDao) {
                     logger.info(`${daoName} model: ${id} loaded successfully ...`);
-                    responseUtility.createSuccessResponse(res, baseLocalizedWrapper.createDTO(localizedDao).locals || []);
+                    responseUtility.createSuccessResponse(res, wrapper.createDTO(localizedDao).locals || []);
                 } else {
                     logger.info(`${daoName} model: ${id} not found`);
                     responseUtility.createNotFoundResponse(res);
@@ -120,7 +119,7 @@ module.exports = function (daoName) {
 
             localizedService.saveLocal(id, req.body, model => {
                 logger.info(`${daoName} local model saved successfully ...`);
-                responseUtility.createCreatedResponse(res, localizedWrapper.createDTO(model));
+                responseUtility.createCreatedResponse(res, wrapper.createDTO(model));
             }, exception => {
                 exceptionHandler.handle(res, exception);
             });
@@ -158,7 +157,7 @@ module.exports = function (daoName) {
 
             localizedService.updateLocal(id, isoCode, req.body, model => {
                 logger.info(`${daoName} local model saved successfully ...`);
-                responseUtility.createCreatedResponse(res, localizedWrapper.createDTO(model));
+                responseUtility.createCreatedResponse(res, wrapper.createDTO(model));
             }, exception => {
                 exceptionHandler.handle(res, exception);
             });
@@ -228,7 +227,7 @@ module.exports = function (daoName) {
             logger.info(`list all ${daoName} model`);
 
             localizedService.getAll(daos => {
-                var localizedDtos = daos.map(localizedDao => baseLocalizedWrapper.createDTO(localizedDao));
+                var localizedDtos = daos.map(localizedDao => wrapper.createDTO(localizedDao));
                 responseUtility.createSuccessResponse(res, localizedDtos);
             });
 
@@ -265,7 +264,7 @@ module.exports = function (daoName) {
             localizedService.getByIdWithLocals(id, localizedDao => {
                 if (localizedDao) {
                     logger.info(`${daoName} model: ${id} loaded successfully ...`);
-                    responseUtility.createSuccessResponse(res, baseLocalizedWrapper.createDTO(localizedDao));
+                    responseUtility.createSuccessResponse(res, wrapper.createDTO(localizedDao));
                 } else {
                     logger.info(`${daoName} model: ${id} not found`);
                     responseUtility.createNotFoundResponse(res);
@@ -299,7 +298,7 @@ module.exports = function (daoName) {
 
             localizedService.save(req.body, model => {
                 logger.info(`${daoName} model saved successfully ...`);
-                responseUtility.createCreatedResponse(res, baseLocalizedWrapper.createDTO(model));
+                responseUtility.createCreatedResponse(res, wrapper.createDTO(model));
             }, exception => {
                 exceptionHandler.handle(res, exception);
             });
@@ -329,7 +328,7 @@ module.exports = function (daoName) {
 
             localizedService.update(id, req.body, model => {
                 logger.info(`${daoName} model ${id} updated successfully ...`);
-                responseUtility.createCreatedResponse(res, baseLocalizedWrapper.createDTO(model));
+                responseUtility.createCreatedResponse(res, wrapper.createDTO(model));
             }, exception => {
                 exceptionHandler.handle(res, exception);
             });

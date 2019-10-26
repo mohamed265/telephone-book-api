@@ -10,5 +10,8 @@ CityLocal.init(
     modelName: 'LK_City_Local'
 });
 
+CityLocal.daoName = 'CityLocal';
+
+CityLocal.tableAttributes = BaseLocalValueDAO.tableAttributes;
 
 module.exports = CityLocal;

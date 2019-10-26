@@ -13,9 +13,12 @@ City.init(
     modelName: 'LK_City'
 });
 
+City.daoName = 'City';
 
-City.locals = City.hasMany(CityLocal, {
-    as: 'locals',
+City.tableAttributes = BaseLocalDAO.tableAttributes;
+
+City.cityLocals = City.hasMany(CityLocal, {
+    as: 'cityLocals',
     unique: false
 });
 
@@ -27,7 +30,7 @@ City.areas = City.hasMany(Area, {
 City.belongsToMany(Lang, { through: 'LK_City_Local' });
 
 City.includes = [
-    { model: CityLocal, as: 'locals' },
+    { model: CityLocal, as: 'cityLocals' },
     { model: Area, as: 'areas' }
 ];
 

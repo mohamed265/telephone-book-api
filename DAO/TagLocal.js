@@ -10,5 +10,8 @@ TagLocal.init(
     modelName: 'LK_Tag_Local'
 });
 
+TagLocal.daoName = 'TagLocal';
+
+TagLocal.tableAttributes = BaseLocalValueDAO.tableAttributes;
 
 module.exports = TagLocal;

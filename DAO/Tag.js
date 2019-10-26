@@ -12,16 +12,19 @@ Tag.init(
     modelName: 'LK_Tag'
 });
 
+Tag.daoName = 'Tag';
 
-Tag.locals = Tag.hasMany(TagLocal, {
-    as: 'locals',
+Tag.tableAttributes = BaseLocalDAO.tableAttributes;
+
+Tag.tagLocals = Tag.hasMany(TagLocal, {
+    as: 'tagLocals',
     unique: false
 });
 
 Tag.belongsToMany(Lang, { through: 'LK_Tag_Local' });
 
 Tag.includes = [
-    { model: TagLocal, as: 'locals' }
+    { model: TagLocal, as: 'tagLocals' }
 ];
 
 module.exports = Tag;
