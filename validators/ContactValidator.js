@@ -2,7 +2,7 @@ const ValidationExcepion = require('../exceptions/ValidationExcepion');
 
 const CommonValidator = require('./CommonValidator');
 
-class LangValidator extends CommonValidator {
+class ContactValidator extends CommonValidator {
 
     validate(body) {
         var errors = [];
@@ -20,7 +20,7 @@ class LangValidator extends CommonValidator {
         errors = errors.concat(this.validateMaxLengthString('imgae', body.imgae, 10000));
 
         if (errors.length)
-            throw new ValidationExcepion('Validation LangModel faild', errors);
+            throw new ValidationExcepion('Validation ContactModel faild', errors);
     }
 
     validateLength(body) {
@@ -72,5 +72,5 @@ class LangValidator extends CommonValidator {
     }
 }
 
-module.exports = new LangValidator();
+module.exports = new ContactValidator();
 

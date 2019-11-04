@@ -20,10 +20,16 @@ User.tableAttributes.name = {
 User.tableAttributes.email = {
     type: Sequelize.STRING,
     allowNull: true,
+    unique: true
 };
 
 User.tableAttributes.passowrd = {
     type: Sequelize.STRING,
+    allowNull: false,
+};
+
+User.tableAttributes.syncDate = {
+    type: Sequelize.DATE,
     allowNull: false,
 };
 

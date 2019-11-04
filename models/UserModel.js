@@ -12,6 +12,7 @@ class UserModel extends StatusBaseModel {
         this.id = "";
         this.name = "";
         this.email = "";
+        this.syncDate = "";
     }
 }
 
