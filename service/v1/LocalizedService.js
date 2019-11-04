@@ -1,7 +1,5 @@
 module.exports = function (daoName) {
 
-    //var wrapper = require(`../../wrappers/BaseLocalizedWrapper`)(`${daoName}`);
-
     let GnericWrapper = require('../../wrappers/GenericWrapper.js');
 
     let wrapper = new GnericWrapper(daoName);
@@ -17,7 +15,7 @@ module.exports = function (daoName) {
 
         getById: (id, callback) => baseServiceLocal.getById(id, callback),
 
-        getByIdWithLocals: (id, callback) => baseServiceLocal.getByIdWithLocals(id, callback),
+        getByIdWithIncludes: (id, callback) => baseServiceLocal.getByIdWithIncludes(id, callback),
 
         save: (body, successCallback, errorCallback) => baseServiceLocal.save(body, successCallback, errorCallback),
 

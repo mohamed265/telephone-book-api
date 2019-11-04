@@ -16,29 +16,6 @@ class BaseServiceLocal extends BaseService {
         super(daoName, wrapper);
 
         this.daoLocalModel = require(`../../../DAO/${daoName}Local`);
-
-        // this.localizedWrapper = require(`../../../wrappers/LocalizedWrapper`)(`${daoName}`);
-    }
-
-    getAllIncludeLocals(callback) {
-
-        this.daoModel.findAll({
-            include: this.daoModel.includes
-        }).then(
-            daos => {
-                callback(daos);
-            }
-        );
-    }
-
-    getByIdWithLocals(id, callback) {
-        this.daoModel.findByPk(id, {
-            include: this.daoModel.includes
-        }).then(
-            dao => {
-                callback(dao);
-            }
-        );
     }
 
     deleteLocal(id, isoCode, callback) {

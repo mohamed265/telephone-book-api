@@ -1,5 +1,7 @@
-const BaseDAO = require('./base/BaseDAO'); 
+const BaseDAO = require('./base/BaseDAO');
 const Sequelize = require('Sequelize');
+const ContactTags = require('./ContactTags');
+const Tag = require('./Tag');
 
 class Contact extends BaseDAO {
 }
@@ -14,13 +16,7 @@ for (let key of keys) {
 Contact.tableAttributes.name = {
     type: Sequelize.STRING,
     allowNull: false,
-    field: "name",
-    set(val) {
-        this.setDataValue('name', val.toUpperCase());
-    },
-    get() {
-        return this.getDataValue('name');
-    }
+    field: "name"
 };
 
 Contact.tableAttributes.number = {
@@ -64,19 +60,18 @@ Contact.init(
 });
 
 Contact.daoName = 'Contact';
-/*
-Contact.tagLocals = Contact.hasMany(ContactLocal, {
-    as: 'tagLocals',
+ 
+
+Contact.contactTags = Contact.hasMany(ContactTags, {
+    as: 'contactTags',
     unique: false
 });
 
-Contact.belongsToMany(Lang, { through: 'LK_Contact_Local' });
+Contact.belongsToMany(Tag, { through: 'Contact_Tags' });
 
 Contact.includes = [
-    { model: ContactLocal, as: 'tagLocals' }
+    { model: ContactTags, as: 'contactTags' }
 ];
-*/
-
 module.exports = Contact;
 
 

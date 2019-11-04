@@ -78,7 +78,7 @@ module.exports = function (daoName) {
 
             logger.info(`loading ${daoName} model with id: ${id}`);
 
-            localizedService.getByIdWithLocals(id, localizedDao => {
+            localizedService.getByIdWithIncludes(id, localizedDao => {
                 if (localizedDao) {
                     logger.info(`${daoName} model: ${id} loaded successfully ...`);
                     responseUtility.createSuccessResponse(res, wrapper.createDTO(localizedDao).locals || []);
@@ -261,7 +261,7 @@ module.exports = function (daoName) {
 
             logger.info(`loading ${daoName} model with id: ${id}`);
 
-            localizedService.getByIdWithLocals(id, localizedDao => {
+            localizedService.getByIdWithIncludes(id, localizedDao => {
                 if (localizedDao) {
                     logger.info(`${daoName} model: ${id} loaded successfully ...`);
                     responseUtility.createSuccessResponse(res, wrapper.createDTO(localizedDao));

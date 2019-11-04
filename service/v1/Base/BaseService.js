@@ -23,8 +23,28 @@ class BaseService {
         );
     }
 
+    getAllWithIncludes(callback) {
+        this.daoModel.findAll({
+            include: this.daoModel.includes
+        }).then(
+            daos => {
+                callback(daos);
+            }
+        );
+    }
+
     getById(id, callback) {
         this.daoModel.findByPk(id).then(
+            dao => {
+                callback(dao);
+            }
+        );
+    }
+
+    getByIdWithIncludes(id, callback) {
+        this.daoModel.findByPk(id, {
+            include: this.daoModel.includes
+        }).then(
             dao => {
                 callback(dao);
             }

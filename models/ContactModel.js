@@ -1,16 +1,20 @@
 
 const StatusBaseModel = require('./Base/BaseModel');
 
-class ContactModel extends StatusBaseModel { 
+class ContactModel extends StatusBaseModel {
 
     static createModel() {
         return new ContactModel();
     }
 
-    constructor() { 
+    constructor() {
         super();
         this.number = "";
         this.address = "";
+        this.longitude = "";
+        this.latitudes = "";
+        this.type = "";
+        this.imgae = "";
         this.tags = [];
     }
 }

@@ -1,6 +1,5 @@
 const BaseDAO = require('./base/BaseDAO');
 const Tag = require('./Tag');
-const Contact = require('./Contact');
 const Sequelize = require('Sequelize');
 
 class ContactTags extends BaseDAO {
@@ -14,22 +13,26 @@ ContactTags.init(
     modelName: 'Contact_Tags'
 });
 
-Contact.daoName = 'ContactTags';
+ContactTags.daoName = 'ContactTags';
 
-ContactTags.belongsTo(Contact, {
-    as: "contact",
-    onDelete: "RESTRICT",
-    foreignKey: {
-        allowNull: false
-    }
-});
+// ContactTags.belongsTo(Contact, {
+//     as: "contact",
+//     onDelete: "RESTRICT",
+//     foreignKey: {
+//         allowNull: false
+//     }
+// });
 
-ContactTags.belongsTo(Tag, {
-    as: "tag",
-    onDelete: "RESTRICT",
-    foreignKey: {
-        allowNull: false
-    }
-});
+// ContactTags.belongsTo(Tag, {
+//     as: "tag",
+//     onDelete: "RESTRICT",
+//     foreignKey: {
+//         allowNull: false
+//     }
+// });
+
+// Contact.includes = [
+//     { model: ContactTags, as: 'contactTags' }
+// ];
 
 module.exports = ContactTags;
