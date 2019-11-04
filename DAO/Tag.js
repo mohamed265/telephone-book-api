@@ -21,6 +21,11 @@ Tag.tagLocals = Tag.hasMany(TagLocal, {
     unique: false
 });
 
+Tag.subTags = Tag.hasMany(Tag, {
+    as: 'subTags',
+    unique: false
+});
+
 Tag.belongsToMany(Lang, { through: 'LK_Tag_Local' });
 
 Tag.includes = [
