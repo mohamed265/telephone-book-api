@@ -1,33 +1,35 @@
-module.exports = (sequelize, type) => {
-    ContactTags = sequelize.define('Contact_Tags', {
-        id: {
-            type: type.UUID,
-            defaultValue: type.UUIDV4,
-            primaryKey: true,
-            allowNull: false,
-            unique: true
-        },
-    });
+const BaseDAO = require('./base/BaseDAO');
+const Tag = require('./Tag');
+const Contact = require('./Contact');
+const Sequelize = require('Sequelize');
 
-    ContactTags.modelName = 'ContactTags';
-
-    ContactTags.associate = function (models) {
-        models.ContactTags.belongsTo(models.Contact, {
-            as: "contact",
-            onDelete: "RESTRICT",
-            foreignKey: {
-                allowNull: false
-            }
-        });
-        models.ContactTags.belongsTo(models.Tag, {
-            as: "tag",
-            onDelete: "RESTRICT",
-            foreignKey: {
-                allowNull: false
-            }
-        });
-    };
-
-    return ContactTags;
+class ContactTags extends BaseDAO {
 }
 
+ContactTags.tableAttributes = BaseDAO.tableAttributes;
+
+ContactTags.init(
+    ContactTags.tableAttributes, {
+    sequelize,
+    modelName: 'Contact_Tags'
+});
+
+Contact.daoName = 'ContactTags';
+
+ContactTags.belongsTo(Contact, {
+    as: "contact",
+    onDelete: "RESTRICT",
+    foreignKey: {
+        allowNull: false
+    }
+});
+
+ContactTags.belongsTo(Tag, {
+    as: "tag",
+    onDelete: "RESTRICT",
+    foreignKey: {
+        allowNull: false
+    }
+});
+
+module.exports = ContactTags;
