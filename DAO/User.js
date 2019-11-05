@@ -23,7 +23,7 @@ User.tableAttributes.email = {
     unique: true
 };
 
-User.tableAttributes.passowrd = {
+User.tableAttributes.password = {
     type: Sequelize.STRING,
     allowNull: false,
 };

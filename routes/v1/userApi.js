@@ -5,6 +5,8 @@ var logger = require('../../utils/logger.js').logger;
 
 var BaseService = require('../../service/v1/Base/BaseService');
 
+var mainService = require('../../service/v1/MainService');
+
 var GenericWrapper = require('../../wrappers/GenericWrapper');
 
 var responseUtility = require('../../utils/ResponseUtility');
@@ -15,7 +17,7 @@ let wrapper = new GenericWrapper("User");
 
 var validator = require(`../../validators/UserValidator`);
 
-var service = new BaseService("User", wrapper);
+var userService = new BaseService("User", wrapper);
 
 /**
  * @typedef user_dto
@@ -42,9 +44,32 @@ router.get('/', (req, res) => {
 
         logger.info("list all user model");
 
-        service.getAll(userDaos => {
+        userService.getAll(userDaos => {
             var userDtos = userDaos.map(userDao => wrapper.createDTO(userDao));
             responseUtility.createSuccessResponse(res, userDtos);
+        });
+
+    } catch (exception) {
+        exceptionHandler.handle(res, exception);
+    }
+});
+
+router.get('/:id/sync', (req, res) => {
+    try {
+        validator.validateParams(req.params);
+
+        const id = req.params.id;
+
+        logger.info(`sync user model with id: ${id}`);
+
+        mainService.sync(id, contacts => {
+            if (contacts) {
+                logger.info(`contacts for user model: ${id} loaded successfully ...`);
+                responseUtility.createSuccessResponse(res, wrapper.createDTO(contacts));
+            } else {
+                logger.info(`user model: ${id} not found`);
+                responseUtility.createNotFoundResponse(res);
+            }
         });
 
     } catch (exception) {
@@ -76,7 +101,7 @@ router.get('/:id', (req, res) => {
 
         logger.info(`loading user model with id: ${id}`);
 
-        service.getById(id, userDao => {
+        userService.getById(id, userDao => {
             if (userDao) {
                 logger.info(`user model: ${id} loaded successfully ...`);
                 responseUtility.createSuccessResponse(res, wrapper.createDTO(userDao));
@@ -109,10 +134,14 @@ router.get('/:id', (req, res) => {
 router.post('/', (req, res) => {
 
     try {
-        
-        validator.validateParams(req.params);
 
-        service.save(req.body, model => {
+        validator.validate(req.body);
+
+        var date = new Date();
+        date.setFullYear(date.getFullYear() - 100);
+        req.body.syncDate = date;
+
+        userService.save(req.body, model => {
             logger.info("user model saved successfully ...");
             responseUtility.createCreatedResponse(res, wrapper.createDTO(model));
         }, exception => {
@@ -142,7 +171,7 @@ router.patch('/:id', (req, res) => {
 
         const id = req.params.id;
 
-        service.update(id, req.body, model => {
+        userService.update(id, req.body, model => {
             logger.info(`user model ${id} updated successfully ...`);
             responseUtility.createCreatedResponse(res, wrapper.createDTO(model));
         }, exception => {
@@ -170,7 +199,7 @@ router.delete('/:id', (req, res) => {
 
         const id = req.params.id;
 
-        service.delete(id, deletedOwner => {
+        userService.delete(id, deletedOwner => {
             logger.info(`user model: ${id} deleted successfully ...`);
             responseUtility.createSuccessResponse(res,
                 `number of deleted rows: ${deletedOwner}`
