@@ -15,6 +15,8 @@ var exceptionHandler = require('../../utils/ExceptionHandler');
 
 let wrapper = new GenericWrapper("User");
 
+let contactWrapper = new GenericWrapper("Contact");
+
 var validator = require(`../../validators/UserValidator`);
 
 var userService = new BaseService("User", wrapper);
@@ -65,7 +67,7 @@ router.get('/:id/sync', (req, res) => {
         mainService.sync(id, contacts => {
             if (contacts) {
                 logger.info(`contacts for user model: ${id} loaded successfully ...`);
-                responseUtility.createSuccessResponse(res, wrapper.createDTO(contacts));
+                responseUtility.createSuccessResponse(res, contactWrapper.createDTO(contacts));
             } else {
                 logger.info(`user model: ${id} not found`);
                 responseUtility.createNotFoundResponse(res);
