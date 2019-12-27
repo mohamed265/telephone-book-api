@@ -338,6 +338,37 @@ module.exports = function (daoName) {
         }
     });
 
+    router.patch(`/${daoName}/:id/withLocals`, (req, res) => {
+        try {
+
+            localizedValidator.validateParams(req.params);
+
+            localizedValidator.validateLength(req.body);
+
+            const id = req.params.id;
+
+            localizedService.update(id, req.body, model => {
+
+                logger.info(`${daoName} model ${id} updated successfully ...`);
+
+                let locals = req.body[`${routePath}Locals`];
+
+                locals.forEach(e => {
+                    localizedService.updateLocal(id, e.LKLangIsoCode, e, model => {
+                    }, exception => {
+                    });
+                })
+
+                responseUtility.createCreatedResponse(res, wrapper.createDTO(model));
+            }, exception => {
+                exceptionHandler.handle(res, exception);
+            });
+
+        } catch (exception) {
+            exceptionHandler.handle(res, exception);
+        }
+    });
+
     /**
     * get city api
     * @route DELETE /city/{id}

@@ -11,7 +11,7 @@ module.exports = function (daoName) {
     return {
         getAll: (callback) => baseServiceLocal.getAll(callback),
 
-        getAllIncludeLocals: (callback) => baseServiceLocal.getAllIncludeLocals(callback),
+        getAllIncludeLocals: (callback) => baseServiceLocal.getAllWithIncludes(callback),
 
         getById: (id, callback) => baseServiceLocal.getById(id, callback),
 

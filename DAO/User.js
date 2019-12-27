@@ -33,6 +33,12 @@ User.tableAttributes.syncDate = {
     allowNull: false,
 };
 
+User.tableAttributes.isAdmin = {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
+};
+
 User.init(
     User.tableAttributes, {
     sequelize,

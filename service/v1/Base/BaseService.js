@@ -15,6 +15,14 @@ class BaseService {
         this.daoModel = require(`../../../DAO/${this.daoName}`);
     }
 
+    get(conditions, callback) {
+        this.daoModel.findAll(conditions).then(
+            daos => {
+                callback(daos);
+            }
+        );
+    }
+
     getAll(callback) {
         this.daoModel.findAll().then(
             daos => {
@@ -70,19 +78,18 @@ class BaseService {
 
         logger.info(`update ${this.daoName} model with id: ${id}`);
 
-        this.daoModel.findByPk(id)
-            .then(dao => {
-                logger.info(`${this.daoName} model new values: ${util.inspect(body)}`);
-                if (dao)
-                    return dao.update(body)
-                else
-                    throw new Error(`Model with id: ${id}, Not Found`);
-            }).then(model => {
-                model.locals = undefined;
-                successCallback(model);
-            }).catch(exception => {
-                errorCallback(exception);
-            });
+        this.daoModel.findByPk(id).then(dao => {
+            logger.info(`${this.daoName} model new values: ${util.inspect(body)}`);
+            if (dao)
+                return dao.update(body)
+            else
+                throw new Error(`Model with id: ${id}, Not Found`);
+        }).then(model => {
+            model.locals = undefined;
+            successCallback(model);
+        }).catch(exception => {
+            errorCallback(exception);
+        });
     }
 
     delete(id, callback) {

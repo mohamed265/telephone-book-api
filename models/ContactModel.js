@@ -9,12 +9,16 @@ class ContactModel extends StatusBaseModel {
 
     constructor() {
         super();
+        this.name = "";
         this.number = "";
         this.address = "";
         this.longitude = "";
         this.latitudes = "";
         this.type = "";
         this.imgae = "";
+        this.l_k_area_id = "";
+        this.l_k_city_id = "";
+        this.l_k_governorate_id = "";
         this.tags = [];
     }
 }

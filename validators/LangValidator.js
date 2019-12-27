@@ -29,7 +29,7 @@ class LangValidator extends CommonValidator {
     validateParams(params) {
         var errors = [];
 
-        errors = errors.concat(this.validateExactLengthString('id', params.id, 36));
+        errors = errors.concat(this.validateMaxLengthString('isoCode', params.isoCode, 255));
 
         if (errors.length)
             throw new ValidationExcepion('Validation Lang Params faild', errors);

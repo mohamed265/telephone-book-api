@@ -28,5 +28,22 @@ module.exports = {
 
     update: (id, body, successCallback, errorCallback) => baseService.update(id, body, successCallback, errorCallback),
 
-    delete: (id, callback) => baseService.delete(id, callback)
+    // delete: (id, callback) => baseService.delete(id, callback)
+
+    delete: (isoCodeValue, callback) => {
+
+        logger.info(`delete ${this.daoName} model with isoCode: ${isoCodeValue}`);
+
+        var langWrapper = require(`../../wrappers/LangWrapper`);
+
+        var BaseService = require('./Base/BaseService')
+        
+        const baseService = new BaseService('Lang', langWrapper);
+
+        baseService.daoModel.destroy({
+            where: { isoCode: isoCodeValue }
+        }).then(deletedOwner => {
+            callback(deletedOwner);
+        });
+    }
 }

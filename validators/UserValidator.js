@@ -17,6 +17,17 @@ class UserValidator extends CommonValidator {
             throw new ValidationExcepion('Validation UserModel faild', errors);
     }
 
+    validateLoginRequest(body) {
+        var errors = [];
+
+        errors = errors.concat(this.validateString('email', body.email, 255));
+
+        errors = errors.concat(this.validateString('password', body.password, 255));
+
+        if (errors.length)
+            throw new ValidationExcepion('Validation UserModel faild', errors);
+    }
+
     validateLength(body) {
         var errors = [];
 

@@ -24,7 +24,8 @@
     "express-winston": "^3.0.0",
     "continuation-local-storage": "*",
     "express-swagger-generator": "*",
-    "uuid": "3.3.3"
+    "uuid": "3.3.3",
+    "cors": "*"
   },
   "repository": {},
   "engines": {
