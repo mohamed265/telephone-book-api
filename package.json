@@ -23,7 +23,8 @@
     "winston": "^3.0.0",
     "express-winston": "^3.0.0",
     "continuation-local-storage": "*",
-    "express-swagger-generator": "*"
+    "express-swagger-generator": "*",
+    "uuid": "3.3.3"
   },
   "repository": {},
   "engines": {

@@ -1,10 +1,10 @@
 
 const LocalizedModel = require('./Base/LocalizedModel');
 
-class CountryModel extends LocalizedModel { 
+class GovernorateModel extends LocalizedModel { 
 
     static createModel() {
-        return new CountryModel();
+        return new GovernorateModel();
     }
 
     constructor() { 
@@ -13,4 +13,4 @@ class CountryModel extends LocalizedModel {
 }
 
 
-module.exports = CountryModel;
+module.exports = GovernorateModel;

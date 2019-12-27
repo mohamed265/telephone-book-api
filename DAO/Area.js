@@ -2,6 +2,7 @@ const BaseLocalDAO = require('./base/BaseLocalDAO');
 const AreaLocal = require('./AreaLocal');
 const Lang = require('./Lang');
 const Sequelize = require('Sequelize');
+const Contact = require('./Contact');
 
 class Area extends BaseLocalDAO {
 
@@ -27,5 +28,7 @@ Area.belongsToMany(Lang, { through: 'LK_Area_Local' });
 Area.includes = [
     { model: AreaLocal, as: 'areaLocals' }
 ];
+
+Area.hasMany(Contact);
 
 module.exports = Area;

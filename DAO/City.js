@@ -3,6 +3,7 @@ const CityLocal = require('./CityLocal');
 const Lang = require('./Lang');
 const Sequelize = require('Sequelize');
 const Area = require('./Area');
+const Contact = require('./Contact');
 
 class City extends BaseLocalDAO {
 
@@ -33,5 +34,7 @@ City.includes = [
     { model: CityLocal, as: 'cityLocals' },
     { model: Area, as: 'areas' }
 ];
+
+City.hasMany(Contact);
 
 module.exports = City;

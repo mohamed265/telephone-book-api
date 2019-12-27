@@ -6,15 +6,27 @@ const Sequelize = require('Sequelize');
 class Tag extends BaseLocalDAO {
 
 }
+
+Tag.tableAttributes = {};
+
+let keys = Object.keys(BaseLocalDAO.tableAttributes);
+for (let key of keys) {
+    Tag.tableAttributes[key] = BaseLocalDAO.tableAttributes[key];
+}
+
+Tag.tableAttributes.description = {
+    type: Sequelize.STRING,
+    allowNull: false,
+    field: "description"
+};
+
 Tag.init(
-    BaseLocalDAO.tableAttributes, {
+    Tag.tableAttributes, {
     sequelize,
     modelName: 'LK_Tag'
 });
 
 Tag.daoName = 'Tag';
-
-Tag.tableAttributes = BaseLocalDAO.tableAttributes;
 
 Tag.tagLocals = Tag.hasMany(TagLocal, {
     as: 'tagLocals',

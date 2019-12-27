@@ -11,7 +11,7 @@ listDirUtility.list(path.join(__dirname, version), ['documentation.js', 'localiz
     router.use('/' + file.slice(0, -6), route);
 })
 
-var localizedApi = ['Area', 'City', 'Country', 'Type', 'Tag'];
+var localizedApi = ['Area', 'City', 'Governorate', 'Type', 'Tag'];
 
 localizedApi.forEach(api => {
     var route = require(path.join(__dirname, version, 'localizedApi.js'))(api);
