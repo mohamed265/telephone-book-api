@@ -31,13 +31,13 @@ Contact.tableAttributes.address = {
 
 Contact.tableAttributes.longitude = {
     type: Sequelize.STRING,
-    allowNull: false,
+    allowNull: true,
     field: "longitude"
 };
 
 Contact.tableAttributes.latitudes = {
     type: Sequelize.STRING,
-    allowNull: false,
+    allowNull: true,
     field: "latitude"
 };
 
@@ -47,9 +47,9 @@ Contact.tableAttributes.type = {
     field: "type"
 };
 
-Contact.tableAttributes.imgae = {
+Contact.tableAttributes.image = {
     type: Sequelize.TEXT,
-    allowNull: false,
+    allowNull: true,
     field: "image"
 };
 

@@ -100,10 +100,10 @@ router.get('/:id', (req, res) => {
  * @property {string} tagId.required - contact tag id - eg: 0ea04144-a9b4-4280-b689-f9f157b50769 
  */
 
- /**
- * @typedef success_contact_tag_dto
- * @property {string} id.required - contact tag id - eg: 0ea04144-a9b4-4280-b689-f9f157b50769 
- */
+/**
+* @typedef success_contact_tag_dto
+* @property {string} id.required - contact tag id - eg: 0ea04144-a9b4-4280-b689-f9f157b50769 
+*/
 
 /**
 * add contact api
@@ -122,7 +122,7 @@ router.post('/:id/tag', (req, res) => {
 
         var body = {
             ContactId: req.params.id,
-            LKTagId:  req.body.tagId
+            LKTagId: req.body.tagId
         }
 
         contactTagService.save(body, model => {
@@ -184,7 +184,7 @@ router.delete('/tag/:contactTagId', (req, res) => {
 router.post('/', (req, res) => {
 
     try {
-        
+
         validator.validateParams(req.params);
 
         service.save(req.body, model => {
@@ -216,6 +216,28 @@ router.patch('/:id', (req, res) => {
         validator.validateLength(req.body);
 
         const id = req.params.id;
+
+        if (req.body['contactTags']) {
+            contactTagService.daoModel.destroy({
+                force: true,
+                where: { ContactId: id }
+            }).then(deletedOwner => {
+                console.log(`number of delete: ${deletedOwner}`);
+                req.body['contactTags'].forEach(element => {
+                    var body = {
+                        ContactId: id,
+                        LKTagId: element.LKTagId
+                    }
+
+                    contactTagService.save(body, model => {
+                        logger.info("contact tag model saved successfully ...");
+                        // responseUtility.createCreatedResponse(res, wrapper.createDTO(model));
+                    }, exception => {
+                        // exceptionHandler.handle(res, exception);
+                    });
+                });
+            });
+        }
 
         service.update(id, req.body, model => {
             logger.info(`contact model ${id} updated successfully ...`);

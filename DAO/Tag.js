@@ -16,7 +16,7 @@ for (let key of keys) {
 
 Tag.tableAttributes.description = {
     type: Sequelize.STRING,
-    allowNull: false,
+    allowNull: true,
     field: "description"
 };
 
