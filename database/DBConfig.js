@@ -38,7 +38,31 @@ global.sequelize = new Sequelize(DBCredentials['database'], DBCredentials['user'
 global.sync = function () {
     sequelize.sync({ force: true })
         .then(() => {
-            console.log(`Database & tables created!`)
+            console.log(`Database & tables created!`);
+            let Lang = require('../DAO/Lang');
+
+            let ar = {
+                isoCode: 'AR',
+                name: "Arabic"
+            };
+
+            let en = {
+                isoCode: 'EN',
+                name: "English"
+            };
+
+            Lang.build(en).save();
+            Lang.build(ar).save();
+
+            let User = require('../DAO/User');
+            let admin = {
+                name: 'Admin',
+                email: "admin@admin.com",
+                password: "password",
+                is_admin: true,
+                syncDate: new Date()
+            };
+            User.build(admin).save();
         });
 }
 
