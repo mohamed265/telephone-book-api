@@ -41,13 +41,55 @@ var userService = new BaseService("User", wrapper);
 * @returns {success_list_dto.model} 200 - normal response
 * @returns {internal_error_respone.model} 500 - error response
 */
+router.get('/admins', (req, res) => {
+    try {
+
+        logger.info("list all user model");
+
+        userService.daoModel.findAll({ where: { isAdmin: true } }).then(userDaos => {
+            var userDtos = userDaos.map(userDao => wrapper.createDTO(userDao));
+            userDtos.forEach(userDto => {
+                userDto['password'] = undefined;
+                userDto['isAdmin'] = undefined;
+            })
+            responseUtility.createSuccessResponse(res, userDtos);
+        });
+
+    } catch (exception) {
+        exceptionHandler.handle(res, exception);
+    }
+});
+/**
+ * @typedef user_dto
+ * @property {string} isoCode.required - user isoCode - eg: ar
+ * @property {string} name.required - user name - eg: arabic
+ * @property {string} id.required - model id - eg: 0ea04144-a9b4-4280-b689-f9f157b50769
+ */
+
+/**
+* @typedef success_list_dto
+* @property {string} status.required - status code - eg: 200
+* @property {Array.<user_dto>} data.required - user list
+*/
+
+/**
+* List all user api
+* @route GET /user
+* @group User Section - user apis
+* @returns {success_list_dto.model} 200 - normal response
+* @returns {internal_error_respone.model} 500 - error response
+*/
 router.get('/', (req, res) => {
     try {
 
         logger.info("list all user model");
 
-        userService.getAll(userDaos => {
+        userService.daoModel.findAll({ where: { isAdmin: false } }).then(userDaos => {
             var userDtos = userDaos.map(userDao => wrapper.createDTO(userDao));
+            userDtos.forEach(userDto => {
+                userDto['password'] = undefined;
+                userDto['isAdmin'] = undefined;
+            })
             responseUtility.createSuccessResponse(res, userDtos);
         });
 
@@ -106,6 +148,8 @@ router.get('/:id', (req, res) => {
         userService.getById(id, userDao => {
             if (userDao) {
                 logger.info(`user model: ${id} loaded successfully ...`);
+                userDao['password'] = undefined;
+                userDao['isAdmin'] = undefined;
                 responseUtility.createSuccessResponse(res, wrapper.createDTO(userDao));
             } else {
                 logger.info(`user model: ${id} not found`);
