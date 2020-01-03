@@ -42,12 +42,12 @@ global.sync = function () {
             let Lang = require('../DAO/Lang');
 
             let ar = {
-                isoCode: 'AR',
+                isoCode: 'ar',
                 name: "Arabic"
             };
 
             let en = {
-                isoCode: 'EN',
+                isoCode: 'en',
                 name: "English"
             };
 
