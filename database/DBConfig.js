@@ -59,7 +59,7 @@ global.sync = function () {
                 name: 'Admin',
                 email: "admin@admin.com",
                 password: "password",
-                is_admin: true,
+                isAdmin: true,
                 syncDate: new Date()
             };
             User.build(admin).save();
