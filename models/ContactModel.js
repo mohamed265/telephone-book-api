@@ -12,6 +12,7 @@ class ContactModel extends StatusBaseModel {
         this.name = "";
         this.number = "";
         this.address = "";
+        this.description = "";
         this.longitude = "";
         this.latitudes = "";
         this.type = "";

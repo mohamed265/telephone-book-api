@@ -53,6 +53,12 @@ Contact.tableAttributes.image = {
     field: "image"
 };
 
+Contact.tableAttributes.description = {
+    type: Sequelize.STRING,
+    allowNull: true,
+    field: "description"
+};
+
 Contact.init(
     Contact.tableAttributes, {
     sequelize,
